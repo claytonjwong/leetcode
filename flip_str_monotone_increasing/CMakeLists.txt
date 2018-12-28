@@ -1,0 +1,6 @@
+cmake_minimum_required(VERSION 3.12)
+project(flip_str_monotone_increasing)
+
+set(CMAKE_CXX_STANDARD 17)
+
+add_executable(flip_str_monotone_increasing flip_str_monotone_increasing.cpp)

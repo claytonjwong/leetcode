@@ -1,0 +1,6 @@
+cmake_minimum_required(VERSION 3.12)
+project(partition_disjoint_intervals)
+
+set(CMAKE_CXX_STANDARD 17)
+
+add_executable(partition_disjoint_intervals partition_disjoint_intervals.cpp)

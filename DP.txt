@@ -1,0 +1,40 @@
+general strategy:
+
+start with top-down recursive solution ( DFS till base case )
+results are returned back up the recursive stack
+
+next create bottom-up DP solution ( BFS beginning at above base case(s) )
+results are stored as partial solutions which build upon themselves
+
+solutions:
+
+link to question ( leetcode, hackerrank, etc )
+pseudo code for REC/DP
+actual code for REC/DP
+detailed explanation with marked up code
+  ( show how REC base case(s) turn into DP base cases )
+  ( show overlapping sub-problems and optimal sub-structure )
+
+general "tricks"
+
+dp in general re-uses previous solutions in order to create current solutions
+in a BFS bottom-up way.  There are 2 general iterative patterns for calculations:
+
+create dp(size+1), return dp[size]
+
+1) iterate from i=1 till i==size(inclusive) to check curr (i) with prev (i-1)
+  OR
+2) iterate from i=0 till i+1==size(inclusive) to check curr(i+1) with prev (i)
+
+
+for recursive solutions first come up with the recursive case.  Assume we have
+already found answers for all but the top, and create recursive formula
+
+second come up with recursive constraints and base case(s)
+
+
+
+Exceptions to top-down rec first, and bottom-up DP second.
+Sometimes it is easier to just start with bottom-up DP...
+
+https://leetcode.com/problems/paint-house/description/
