@@ -31,7 +31,7 @@ A2: https://leetcode.com/problems/largest-perimeter-triangle/discuss/217961/Conc
 
 using namespace std;
 
-
+/*
 class Solution
 {
 public:
@@ -41,29 +41,12 @@ public:
 
     Points kClosest( Points& P, int K )
     {
-        auto distance = []( auto a, auto b ){ return sqrt( a*a + b*b ); };
         partial_sort( P.begin(), P.begin() + K, P.end(),
-            [&]( const Point& p, const Point& q ){ return distance( p[0], p[1] ) < distance( q[0], q[1] ); });
+            []( const auto& p, const auto& q ){ return p[0]*p[0] + p[1]*p[1] < q[0]*q[0] + q[1]*q[1]; });
         return { P.cbegin(), P.cbegin() + K };
     }
 
 };
-
-//class Solution
-//{
-//public:
-//
-//    using Point = vector< int >;
-//    using Points = vector< Point >;
-//
-//    Points kClosest( Points& P, int K )
-//    {
-//        partial_sort( P.begin(), P.begin() + K, P.end(),
-//            [&]( const auto& p, const auto& q ){ return sqrt( p[0]*p[0] + p[1]*p[1] ) < sqrt( q[0]*q[0] + q[1]*q[1] ); });
-//        return { P.cbegin(), P.cbegin() + K };
-//    }
-//
-//};
 
 
 int main()
@@ -75,21 +58,23 @@ int main()
 
     return 0;
 }
+*/
 
 
-/*
-using Collection = vector< int >;
+
 
 class Solution
 {
 public:
 
+    using Collection = vector< int >;
+
     int largestPerimeter( Collection& A )
     {
-        sort( A.begin(), A.end() );
-        for( int N = int( A.size() ); N - 3 >= 0; --N )
-            if( A[ N-3 ] + A[ N-2 ] > A[ N-1 ])
-                return( A[ N-3 ] + A[ N-2 ] + A[ N-1 ] );
+        sort( A.rbegin(), A.rend() );
+        for( auto i{ 0 }; i + 2 < A.size(); ++i )
+            if( A[ i ] < A[ i+1 ] + A[ i+2 ] )
+                return A[ i ] + A[ i+1 ] + A[ i+2 ] ;
         return 0;
     }
 
@@ -97,9 +82,9 @@ public:
 
 int main()
 {
-    Collection A{ 3,6,2,3 };
+    Solution::Collection A{ 3,6,2,3 };
     Solution s;
     cout << s.largestPerimeter( A ) << endl;
     return 0;
 }
-*/
+
