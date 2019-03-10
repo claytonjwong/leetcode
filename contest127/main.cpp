@@ -5,7 +5,7 @@
     https://leetcode.com/contest/weekly-contest-127
 
     Rank	        Name	        Score	Finish Time 	Q1 (4)	        Q2 (4)	    Q3 (5)	    Q4 (6)
-    1119 / 4033	    claytonjwong 	19	    1:14:00	        0:20:51  2	    0:37:04	    0:53:00	    1:04:00
+    739 / 4734	    claytonjwong 	19	    1:14:00	        0:20:51  2	    0:37:04	    0:53:00	    1:04:00
 
     Q1: https://leetcode.com/problems/maximize-sum-of-array-after-k-negations/
     A1: https://leetcode.com/problems/maximize-sum-of-array-after-k-negations/discuss/252205/Concise-C%2B%2B
