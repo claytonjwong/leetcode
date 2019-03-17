@@ -22,7 +22,6 @@ A2: https://leetcode.com/problems/pairs-of-songs-with-total-durations-divisible-
 #include <unordered_map>
 #include <bitset>
 #include <numeric>
-//bitset< 32 > B( N );
 
 using namespace std;
 
