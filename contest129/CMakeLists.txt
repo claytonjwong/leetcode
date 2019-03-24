@@ -1,0 +1,6 @@
+cmake_minimum_required(VERSION 3.13)
+project(contest129)
+
+set(CMAKE_CXX_STANDARD 17)
+
+add_executable(contest129 main.cpp)
