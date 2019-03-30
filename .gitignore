@@ -16,3 +16,5 @@ cmake_build_*
 .\#*
 .idea*
 .DS_Store
+*.iml
+*.class
