@@ -9,6 +9,11 @@
 
  On a positive note, my original solution without additional pruning constraints would have worked for any arbitrary K.
 
+ Q1: https://leetcode.com/problems/partition-array-into-three-parts-with-equal-sum/
+ A1: https://leetcode.com/problems/partition-array-into-three-parts-with-equal-sum/discuss/261248/C%2B%2B-and-Python3-solutions
+
+
+
 */
 
 #include <iostream>
@@ -101,7 +106,7 @@ int main(){
 class Solution {
 public:
     int smallestRepunitDivByK( int K ){
-        for( auto N{ 0 }, i{ 1 }; i < 1e6; ++i )
+        for( auto N{ 0 }, i{ 1 }; i < 1e5; ++i )
             if(( N = ( N * 10 + 1 ) % K ) == 0 )
                 return i;
         return -1;
