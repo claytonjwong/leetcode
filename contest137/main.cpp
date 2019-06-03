@@ -24,20 +24,38 @@ using namespace std;
 class Solution {
 public:
     int lastStoneWeight( vector< int >& s ){
-        while( 1 < s.size() ){
+        for( int a,b; 1 < s.size(); ){
             sort( s.begin(), s.end() );
-            auto N = s.size();
-            auto a = s[ N-2 ],
-                 b = s[ N-1 ],
-                 c = b - a;
-            s.pop_back(), s.pop_back();
-            if( 0 < c )
-                s.push_back( c );
+            a = s.back(), s.pop_back();
+            b = s.back(), s.pop_back();
+            if( 0 < a-b )
+                s.push_back( a-b );
         }
         return s.empty()? 0 : s.back();
     }
 };
 */
+
+class Solution {
+public:
+    int lastStoneWeight( vector< int >& s, int a={}, int b={} ){
+        priority_queue< int > q{ s.begin(), s.end() };
+        while( 1 < q.size() ){
+            a = q.top(), q.pop();
+            b = q.top(), q.pop();
+            if( 0 < a-b )
+                q.push( a-b );
+        }
+        return q.empty()? 0 : q.top();
+    }
+};
+
+int main() {
+    Solution solution;
+    vector< int > A = { 2,7,4,1,8,1 };
+    cout << solution.lastStoneWeight( A ) << endl;
+    return 0;
+}
 
 /*
 class Solution {
@@ -55,6 +73,7 @@ public:
 };
 */
 
+/*
 bool is_predecessor(const string &a, const string &b) {
     if (a.size() + 1 != b.size())
         return false;
@@ -94,4 +113,6 @@ public:
         return *max_element(dp.begin(), dp.end());
     }
 };
+*/
+
 
