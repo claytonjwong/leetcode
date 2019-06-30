@@ -66,14 +66,14 @@ private:
 };
 */
 
-/*
+
 using VI = vector< int >;
 using VD = vector< double >;
 class Solution {
 public:
     VD sampleStats( VI& cnt ){
-        double mind{ 256.0 }, maxd{ -1.0 }, mode{ 0.0 }, sum{ 0.0 };
         const auto N = cnt.size();
+        double mind{ 256.0 }, maxd{ -1.0 }, mode{ 0.0 }, sum{ 0.0 };
         auto totalCnt{ 0 }, modeCnt{ 0 };
         for( auto i{ 0 }; i < N; ++i ){
             if( cnt[ i ] == 0 )
@@ -88,17 +88,16 @@ public:
             totalCnt += cnt[ i ];
         }
         auto mean = sum / totalCnt;
-        auto median = getMedian( cnt, totalCnt );
+        auto median = getMedian( cnt, N, totalCnt );
         return{ mind, maxd, mean, median, mode };
     }
 private:
-    double getMedian( const VI& cnt, int totalCnt, double median=0.0 ){
+    double getMedian( const VI& cnt, const size_t N, int totalCnt, double median=0.0 ){
         auto T1 = totalCnt / 2,
              T2 = T1 + 1;
         auto isEven = totalCnt % 2 == 0;
         totalCnt = 0;
         auto i{ 0 };
-        const auto N = cnt.size();
         for(; i < N; ++i ){
             totalCnt += cnt[ i ];
             if( totalCnt >= T1 ){
@@ -134,10 +133,9 @@ int main() {
     copy( result.begin(), result.end(), ostream_iterator< double >( cout, ", " ) );
     return 0;
 }
-*/
 
 
-
+/*
 using VI = vector< int >;
 using VVI = vector< VI >;
 using Passengers = unordered_map< int,int >;
@@ -154,22 +152,10 @@ public:
     }
 };
 
-
-
 int main() {
     VVI trips = { {3,2,7},{3,7,9},{8,3,9} };
     auto capacity{ 11 };
     cout << Solution().carPooling( trips, capacity ) << endl;
     return 0;
 }
-
-
-
-
-
-
-
-
-
-
-
+*/
