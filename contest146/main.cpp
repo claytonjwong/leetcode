@@ -9,6 +9,7 @@
  *
  * Q2: https://leetcode.com/problems/shortest-path-with-alternating-colors/
  * A2: https://leetcode.com/problems/shortest-path-with-alternating-colors/discuss/340773/C%2B%2B-solution
+ *
  */
 
 #include <iostream>
@@ -27,7 +28,7 @@
 
 using namespace std;
 
-
+/*
 class Solution {
 public:
     using VI = vector< int >;
@@ -51,26 +52,7 @@ public:
         return ans;
     }
 };
-
-class Solution {
-public:
-    using VI = vector< int >;
-    using VVI = vector< VI >;
-    struct Hash {
-        size_t operator()( const VI& x ) const {
-            return 10 * x[ 0 ] + x[ 1 ];
-        }
-    };
-    using Count = unordered_map< VI,int,Hash >;
-    int numEquivDominoPairs( VVI& D, Count cnt={}, int ans=0 ){
-        for( auto i{ 0 }; i < D.size(); ++i ){
-            auto dom = D[ i ]; // i-th (dom)ino
-            sort( dom.begin(), dom.end() ); // if needed, "flip" domino for unique count such that lhs < rhs (i.e. [2,1] -> [1,2], since [2,1] == [1,2] )
-            ans += cnt[ dom ]++;
-        }
-        return ans;
-    }
-};
+*/
 
 class Solution {
 public:
