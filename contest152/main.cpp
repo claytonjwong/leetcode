@@ -72,7 +72,7 @@ int main() {
 //    vector<bool> canMakePaliQueries(string s, vector<vector<int>>& queries, vector<bool> ans={}) {
 //        for (auto query: queries) {
 //            auto L = query[0],
-//                R = query[1],
+//                 R = query[1],
 //                K = query[2];
 //            unordered_map<char, int> cnt;
 //            for (auto i=L; i <= R; ++i) {
@@ -90,30 +90,53 @@ int main() {
 //    }
 //};
 
+//class Solution {
+//public:
+//    vector<bool> canMakePaliQueries(string s, vector<vector<int>>& queries, vector<bool> ans={}) {
+//        vector<vector<int>> cnt(s.size()+1, vector<int>(123, 0));
+//        for (auto i=1; i <= s.size(); ++i) {
+//            cnt[i][s[i-1]] = 1;
+//            for (auto j=97; j < 123; ++j) {
+//                cnt[i][j] += cnt[i-1][j];
+//            }
+//        }
+//        for (auto query: queries) {
+//            auto L = query[0],
+//                 R = query[1],
+//                 K = query[2];
+//            vector<int> diff(123, 0);
+//            for (auto j=97; j < 123; ++j) {
+//                diff[j] = cnt[R + 1][j] - cnt[L + 1][j];
+//            }
+//            ++diff[s[L]]; // left-inclusive
+//            auto odd = 0;
+//            for (auto j=97; j < 123; ++j) {
+//                if (diff[j] % 2) {
+//                    ++odd;
+//                }
+//            }
+//            ans.push_back(odd / 2 <= K);
+//        }
+//        return ans;
+//    }
+//};
+
 class Solution {
 public:
-    vector<bool> canMakePaliQueries(string s, vector<vector<int>>& queries, vector<bool> ans={}) {
-        vector<vector<int>> cnt(s.size()+1, vector<int>(123, 0));
+    using Answer = vector<bool>;
+    using VI = vector<int>;
+    using VVI = vector<VI>;
+    Answer canMakePaliQueries(string s, VVI& queries, Answer ans={}) {
+        VVI cnt(1, VI(123, 0));
         for (auto i=1; i <= s.size(); ++i) {
-            cnt[i][s[i-1]] = 1;
-            for (auto j=97; j < 123; ++j) {
-                cnt[i][j] += cnt[i-1][j];
-            }
+            cnt.push_back(cnt.back());
+            ++cnt[i][s[i-1]];
         }
-        for (auto query: queries) {
-            auto L = query[0],
-                 R = query[1],
-                 K = query[2];
-            vector<int> diff(123, 0);
-            for (auto j=97; j < 123; ++j) {
-                diff[j] = cnt[R + 1][j] - cnt[L + 1][j];
-            }
-            ++diff[s[L]]; // left-inclusive
+        for (auto q: queries) {
+            auto [L, R, K] = tie(q[0], q[1], q[2]);
             auto odd = 0;
             for (auto j=97; j < 123; ++j) {
-                if (diff[j] % 2) {
-                    ++odd;
-                }
+                odd += (cnt[R + 1][j] - cnt[L][j]) % 2; // # odd chars in s from L to R inclusive ( in order for L to be inclusive, do NOT add 1 onto L )
             }
             ans.push_back(odd / 2 <= K);
         }
