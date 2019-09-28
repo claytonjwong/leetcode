@@ -1,10 +1,12 @@
 /*
 
+ Score: 2.03 of 10
+
  Q1: https://leetcode.com/problems/license-key-formatting/
  A1: https://leetcode.com/problems/license-key-formatting/discuss/392002/C%2B%2B-Solution
 
  Q2: https://leetcode.com/problems/longest-absolute-file-path/
- A2:
+ A2: https://leetcode.com/problems/longest-absolute-file-path/discuss/392338/C%2B%2B-Solution
 
  */
 
