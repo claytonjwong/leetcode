@@ -26,14 +26,9 @@ public:
         auto pivot = seq.begin() + (M * N) - k;
         VI shifted{pivot, seq.end()};
         shifted.insert(shifted.end(), seq.begin(), pivot);
-        auto i = 0,
-             j = 0;
         VVI ans(M, VI(N));
-        for (auto num: shifted) {
-            ans[i][j] = num;
-            if (++j == N)
-                ++i, j=0;
-        }
+        for (auto i=0; i < M * N; ++i)
+            ans[i / N][i % N] = shifted[i];
         return ans;
     }
 };
