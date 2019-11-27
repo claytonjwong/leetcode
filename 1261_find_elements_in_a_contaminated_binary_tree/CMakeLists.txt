@@ -1,0 +1,6 @@
+cmake_minimum_required(VERSION 3.14)
+project(1261_find_elements_in_a_contaminated_binary_tree)
+
+set(CMAKE_CXX_STANDARD 17)
+
+add_executable(1261_find_elements_in_a_contaminated_binary_tree main.cpp)
