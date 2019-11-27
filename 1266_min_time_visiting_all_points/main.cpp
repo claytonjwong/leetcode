@@ -1,3 +1,10 @@
+/*
+ * 1266. Minimum Time Visiting All Points
+ *
+ * Q: https://leetcode.com/problems/minimum-time-visiting-all-points/
+ * A: https://leetcode.com/problems/minimum-time-visiting-all-points/discuss/436603/Javascript-and-C%2B%2B-solutions
+ */
+
 #include <iostream>
 #include <vector>
 
