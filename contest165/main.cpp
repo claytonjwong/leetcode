@@ -25,6 +25,13 @@
 using namespace std;
 
 /*
+ * 1275. Find Winner on a Tic Tac Toe Game
+ *
+ * Q: https://leetcode.com/contest/weekly-contest-165/problems/find-winner-on-a-tic-tac-toe-game/
+ * A: https://leetcode.com/problems/find-winner-on-a-tic-tac-toe-game/discuss/441746/Javascript-and-C%2B%2B-solutions
+ */
+
+/*
 
  A is X
  B is O
@@ -43,12 +50,6 @@ using namespace std;
  */
 
 /*
- * 1275. Find Winner on a Tic Tac Toe Game
- *
- * Q: https://leetcode.com/contest/weekly-contest-165/problems/find-winner-on-a-tic-tac-toe-game/
- * A: https://leetcode.com/problems/find-winner-on-a-tic-tac-toe-game/discuss/441746/Javascript-and-C%2B%2B-solutions
- */
-
 class Solution {
 public:
     using VI = vector<int>;
@@ -88,6 +89,15 @@ int main() {
     cout << ans << endl;
     return 0;
 }
+*/
+
+
+/*
+ * 1276. Number of Burgers with No Waste of Ingredients
+ *
+ * Q: https://leetcode.com/contest/weekly-contest-165/problems/number-of-burgers-with-no-waste-of-ingredients/
+ * A: https://leetcode.com/problems/number-of-burgers-with-no-waste-of-ingredients/discuss/441752/Javascript-and-C%2B%2B-solutions
+ */
 
 /*
 
@@ -100,14 +110,7 @@ int main() {
 
  */
 
-/*
- * 1276. Number of Burgers with No Waste of Ingredients
- *
- * Q: https://leetcode.com/contest/weekly-contest-165/problems/number-of-burgers-with-no-waste-of-ingredients/
- * A: https://leetcode.com/problems/number-of-burgers-with-no-waste-of-ingredients/discuss/441752/Javascript-and-C%2B%2B-solutions
- */
 
-/*
 class Solution {
 public:
     using VI = vector<int>;
@@ -127,4 +130,4 @@ int main() {
     copy(ans.begin(), ans.end(), ostream_iterator<int>(cout, " ")), cout << endl;
     return 0;
 }
-*/
+
