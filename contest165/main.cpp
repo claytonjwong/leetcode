@@ -3,10 +3,10 @@
  *
  * 1 h 30 m	8/19	0:51:10	2/4	1479/3837
  *
- * Q1: https://leetcode.com/contest/weekly-contest-165/problems/find-winner-on-a-tic-tac-toe-game/
+ * Q1: https://leetcode.com/problems/find-winner-on-a-tic-tac-toe-game
  * A1: https://leetcode.com/problems/find-winner-on-a-tic-tac-toe-game/discuss/441746/Javascript-and-C%2B%2B-solutions
  *
- * Q2: https://leetcode.com/contest/weekly-contest-165/problems/number-of-burgers-with-no-waste-of-ingredients/
+ * Q2: https://leetcode.com/problems/number-of-burgers-with-no-waste-of-ingredients/
  * A2: https://leetcode.com/problems/number-of-burgers-with-no-waste-of-ingredients/discuss/441752/Javascript-and-C%2B%2B-solutions
  *
  */
@@ -27,7 +27,7 @@ using namespace std;
 /*
  * 1275. Find Winner on a Tic Tac Toe Game
  *
- * Q: https://leetcode.com/contest/weekly-contest-165/problems/find-winner-on-a-tic-tac-toe-game/
+ * Q: https://leetcode.com/problems/find-winner-on-a-tic-tac-toe-game
  * A: https://leetcode.com/problems/find-winner-on-a-tic-tac-toe-game/discuss/441746/Javascript-and-C%2B%2B-solutions
  */
 
@@ -95,7 +95,7 @@ int main() {
 /*
  * 1276. Number of Burgers with No Waste of Ingredients
  *
- * Q: https://leetcode.com/contest/weekly-contest-165/problems/number-of-burgers-with-no-waste-of-ingredients/
+ * Q: https://leetcode.com/problems/number-of-burgers-with-no-waste-of-ingredients/
  * A: https://leetcode.com/problems/number-of-burgers-with-no-waste-of-ingredients/discuss/441752/Javascript-and-C%2B%2B-solutions
  */
 
