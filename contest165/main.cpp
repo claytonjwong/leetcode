@@ -9,6 +9,9 @@
  * Q2: https://leetcode.com/problems/number-of-burgers-with-no-waste-of-ingredients/
  * A2: https://leetcode.com/problems/number-of-burgers-with-no-waste-of-ingredients/discuss/441752/Javascript-and-C%2B%2B-solutions
  *
+ * Q3: https://leetcode.com/problems/count-square-submatrices-with-all-ones/
+ * A3: https://leetcode.com/problems/count-square-submatrices-with-all-ones/discuss/442151/Javascript-and-C%2B%2B-solutions
+ *
  */
 
 #include <iostream>
@@ -21,6 +24,7 @@
 #include <set>
 #include <algorithm>
 #include <iterator>
+#include <numeric>
 
 using namespace std;
 
@@ -110,7 +114,7 @@ int main() {
 
  */
 
-
+/*
 class Solution {
 public:
     using VI = vector<int>;
@@ -130,4 +134,44 @@ int main() {
     copy(ans.begin(), ans.end(), ostream_iterator<int>(cout, " ")), cout << endl;
     return 0;
 }
+*/
 
+
+/*
+ * 1277. Count Square Submatrices with All Ones
+ *
+ * Q: https://leetcode.com/problems/count-square-submatrices-with-all-ones/
+ * A: https://leetcode.com/problems/count-square-submatrices-with-all-ones/discuss/442151/Javascript-and-C%2B%2B-solutions
+ */
+/*
+class Solution {
+public:
+    using VI = vector<int>;
+    using VVI = vector<VI>;
+    int countSquares(VVI& A, int ans=0) {
+        auto [M, N] = make_tuple(A.size(), A[0].size());
+        for (auto i=1; i < M; ++i)
+            for (auto j=1; j < N; ++j)
+                if (A[i][j] && A[i-1][j] && A[i][j-1] && A[i-1][j-1])
+                    A[i][j] = 1 + min({A[i-1][j], A[i][j-1], A[i-1][j-1]});
+        for (auto& row: A)
+            ans += accumulate(row.begin(), row.end(), 0);
+        return ans;
+    }
+};
+*/
+/*
+class Solution {
+public:
+    using VI = vector<int>;
+    using VVI = vector<VI>;
+    int countSquares(VVI& A, int ans=0) {
+        auto [M, N] = make_tuple(A.size(), A[0].size());
+        for (auto i=0; i < M; ++i)
+            for (auto j=0; j < N; ans += A[i][j++])
+                if (i && j && A[i][j] && A[i-1][j] && A[i][j-1] && A[i-1][j-1])
+                    A[i][j] = 1 + min({A[i-1][j], A[i][j-1], A[i-1][j-1]});
+        return ans;
+    }
+};
+*/
