@@ -14,14 +14,13 @@ class Solution {
 public:
     string toHexspeak(string str, ostringstream os=ostringstream()) {
         auto num = stoll(str);
-        os << hex << num;
+        os << hex << uppercase << num;
         auto A = os.str();
         for (auto i=0; i < A.size(); ++i) {
             if (A[i] == '0') A[i] = 'O';
             if (A[i] == '1') A[i] = 'I';
             if (!isalpha(A[i]))
                 return "ERROR";
-            A[i] = toupper(A[i]);
         }
         return A;
     }
