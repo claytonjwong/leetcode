@@ -1,0 +1,6 @@
+cmake_minimum_required(VERSION 3.14)
+project(1287_element_appearing_more_than_25_percent_in_sorted_array)
+
+set(CMAKE_CXX_STANDARD 17)
+
+add_executable(1287_element_appearing_more_than_25_percent_in_sorted_array main.cpp)
