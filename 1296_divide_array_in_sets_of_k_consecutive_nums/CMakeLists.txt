@@ -1,0 +1,6 @@
+cmake_minimum_required(VERSION 3.15)
+project(1296_divide_array_in_sets_of_k_consecutive_nums)
+
+set(CMAKE_CXX_STANDARD 17)
+
+add_executable(1296_divide_array_in_sets_of_k_consecutive_nums main.cpp)
