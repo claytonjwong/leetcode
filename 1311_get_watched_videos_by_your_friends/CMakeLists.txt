@@ -1,0 +1,6 @@
+cmake_minimum_required(VERSION 3.15)
+project(1311_get_watched_videos_by_your_friends)
+
+set(CMAKE_CXX_STANDARD 17)
+
+add_executable(1311_get_watched_videos_by_your_friends main.cpp)
