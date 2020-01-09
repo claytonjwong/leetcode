@@ -1,0 +1,6 @@
+cmake_minimum_required(VERSION 3.15)
+project(1312_min_insertion_steps_to_make_str_palindrome)
+
+set(CMAKE_CXX_STANDARD 17)
+
+add_executable(1312_min_insertion_steps_to_make_str_palindrome main.cpp)
