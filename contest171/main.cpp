@@ -10,7 +10,7 @@
  * A1: https://leetcode.com/problems/convert-integer-to-the-sum-of-two-no-zero-integers/discuss/477795/Javascript-and-C%2B%2B-solutions
  *
  * Q2: https://leetcode.com/problems/minimum-flips-to-make-a-or-b-equal-to-c/
- * A2: https://leetcode.com/problems/minimum-flips-to-make-a-or-b-equal-to-c/discuss/477794/Javascript-and-C%2B%2B-solutions
+ * A2: https://leetcode.com/problems/minimum-flips-to-make-a-or-b-equal-to-c/discuss/478305/Javascript-and-C%2B%2B-solutions
  *
  * Q3: https://leetcode.com/problems/number-of-operations-to-make-network-connected/
  * A3: https://leetcode.com/problems/number-of-operations-to-make-network-connected/discuss/477783/Javascript-and-C%2B%2B-solutions
