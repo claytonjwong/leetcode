@@ -44,8 +44,6 @@ public:
         for (auto i = 0; i < N; ++i)
             find(i);
         auto K = set<int>{P.begin(), P.end()}.size() - 1;
-        cout << K << endl;
-        cout << same << endl;
         if (same >= K)
             return K;
         return -1;
