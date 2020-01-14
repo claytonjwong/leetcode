@@ -2,7 +2,7 @@
  * 1314. Matrix Block Sum
  *
  * Q: https://leetcode.com/problems/matrix-block-sum/
- * A:
+ * A: https://leetcode.com/problems/matrix-block-sum/discuss/480496/Javascript-and-C%2B%2B-solutions
  */
 
 #include <iostream>
