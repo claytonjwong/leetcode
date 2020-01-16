@@ -1,0 +1,6 @@
+cmake_minimum_required(VERSION 3.15)
+project(1290_convert_binary_number_in_a_linked_list_to_int)
+
+set(CMAKE_CXX_STANDARD 17)
+
+add_executable(1290_convert_binary_number_in_a_linked_list_to_int main.cpp)
