@@ -11,6 +11,7 @@
 
 using namespace std;
 
+/*
 class Solution {
 public:
     using VI = vector<int>;
@@ -39,6 +40,27 @@ public:
                 A[i][j] = m[u][v].back(), m[u][v].pop_back();
             }
         }
+        return A;
+    }
+};
+*/
+
+class Solution {
+public:
+    using VI = vector<int>;
+    using VVI = vector<VI>;
+    using Map = unordered_map<int, VI>;
+    VVI diagonalSort(VVI& A, Map m = {}) {
+        int M = A.size(),
+                N = A[0].size();
+        for (auto i = 0; i < M; ++i)
+            for (auto j = 0; j < N; ++j)
+                m[i - j].push_back(A[i][j]);
+        for (auto i = 0; i < M; ++i) sort(m[i].rbegin(), m[i].rend());
+        for (auto j = 1; j < N; ++j) sort(m[-j].rbegin(), m[-j].rend());
+        for (auto i = 0; i < M; ++i)
+            for (auto j = 0; j < N; ++j)
+                A[i][j] = m[i - j].back(), m[i - j].pop_back();
         return A;
     }
 };
