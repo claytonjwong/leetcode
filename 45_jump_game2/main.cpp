@@ -37,14 +37,11 @@ using namespace std;
 class Solution {
 public:
     using VI = vector<int>;
-    using Queue = queue<int>;
-    using Set = unordered_set<int>;
-    int jump(VI& A, Set seen = Set{0}, int hops = 0) {
-        int N = A.size(), reach = A[0], next = -1;
+    int jump(VI& A) {
+        int N = A.size(), hops = 0, reach = A[0], next = -1;
         for (auto i = 1; i < N; ++hops, reach = next)
             for (next = reach; i <= min(reach, N - 1); ++i)
-                if (seen.insert(i).second)
-                    next = max(next, i + A[i]);
+                next = max(next, i + A[i]);
         return hops;
     }
 };
