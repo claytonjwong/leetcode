@@ -23,7 +23,7 @@ public:
     VI spiralOrder(VVI& A, int i = 0, int j = 0, Set seen = {}, VI ans = {}) {
         int M = A.size(),
                 N = M == 0 ? 0 : A[0].size();
-        int dir = 0; VVI dirs{{0, 1}, {1, 0}, {0, -1}, {-1, 0}};
+        int dir = 0; VVI dirs{{0, 1}, {1, 0}, {0, -1}, {-1, 0}}; // clockwise: ( 👉, 👇, 👈, 👆 )
         while (seen.size() < M * N) {
             if (seen.insert({i, j}).second)
                 ans.push_back(A[i][j]);
