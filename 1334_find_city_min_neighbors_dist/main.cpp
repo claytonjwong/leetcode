@@ -8,6 +8,7 @@
 #include <iostream>
 #include <vector>
 #include <queue>
+#include <unordered_map>
 
 using namespace std;
 
@@ -15,61 +16,83 @@ class Solution {
 public:
     using VI = vector<int>;
     using VVI = vector<VI>;
-    using VVVI = vector<VVI>;
-    int findTheCity(int N, VVI& E, int T, int INF = 1e9 + 7) {
+    using Tuple = tuple<int, int>;
+    using Graph = unordered_map<int, vector<Tuple>>;
+    static constexpr int INF = 1e9 + 7;
+    int findTheCity(int N, VVI& edges, int threshold) {
         VVI dist(N, VI(N, INF));
         for (auto i = 0; i < N; ++i)
             dist[i][i] = 0;
+        Graph G;
+        for (auto& e: edges) {
+            auto [u, v, w] = tie(e[0], e[1], e[2]);
+            G[u].push_back({v, w});
+            G[v].push_back({u, w});
+        }
         auto minCity = [&]() {
-            auto low = INF, city = -1;
+            int min = INF, city = -1;
             for (auto i = 0; i < N; ++i) {
                 auto cnt = 0;
                 for (auto j = 0; j < N; ++j)
-                    if (i != j && dist[i][j] <= T)
+                    if (i != j && dist[i][j] <= threshold)
                         ++cnt;
-                if (low >= cnt) {
-                    low = cnt;
+                if (min >= cnt)
+                    min = cnt,
                     city = i;
-                }
             }
             return city;
         };
-        auto bellmanFord = [&](VI& dist) {
-            for (auto k = 1; k < N; ++k) {
-                for (auto& e: E) {
-                    auto [u, v, w] = tie(e[0], e[1], e[2]);
-                    if (dist[u] > dist[v] + w) dist[u] = dist[v] + w;
-                    if (dist[v] > dist[u] + w) dist[v] = dist[u] + w;
+        auto dijkstra = [&](int start, VI& dist) {
+            struct Cmp {
+                bool operator()(const Tuple& a, const Tuple& b) const {
+                    return std::get<1>(a) < std::get<1>(b);
+                }
+            };
+            priority_queue<Tuple, vector<Tuple>, Cmp> q;
+            q.push({start, 0});
+            while (!q.empty()) {
+                auto [u, cost] = q.top(); q.pop();
+                if (dist[u] < cost)
+                    continue;
+                for (auto [v, w]: G[u]) {
+                    if (dist[v] > dist[u] + w) {
+                        dist[v] = dist[u] + w;
+                        q.push({v, w});
+                    }
                 }
             }
         };
-//        VVVI adj(N);
-//        for (auto& e: E) {
-//            auto [u, v, w] = tie(e[0], e[1], e[2]);
-//            adj[u].push_back({v, w});
-//            adj[v].push_back({u, w});
-//        }
-//        auto SPFA = [&](VVVI& adj, VI& dist, int i) {
-//            dist[i] = 0;
-//            queue<int> q{{i}};
-//            while (!q.empty()) {
-//                auto u = q.front(); q.pop();
-//                for (auto& e: adj[u]) {
-//                    auto [v, w] = tie(e[0], e[1]);
-//                    if (dist[v] > dist[u] + w) {
-//                        dist[v] = dist[u] + w;
-//                        q.push(v);
-//                    }
-//                }
-//            }
-//        };
-        for (auto i = 0; i < N; ++i) {
-            bellmanFord(dist[i]);
-//            SPFA(adj, dist[i], i);
-        }
+        auto bellmanFord = [&](VI& dist) {
+            for (auto k = 1; k < N; ++k) {
+                for (auto& e: edges) {
+                    auto [u, v, w] = tie(e[0], e[1], e[2]);
+                    if (dist[u] > dist[v] + w)
+                        dist[u] = dist[v] + w;
+                    if (dist[v] > dist[u] + w)
+                        dist[v] = dist[u] + w;
+                }
+            }
+        };
+        auto SPFA = [&](int start, VI& dist) {
+            queue<int> q({start});
+            while (!q.empty()) {
+                auto u = q.front(); q.pop();
+                for (auto [v, w]: G[u]) {
+                    if (dist[v] > dist[u] + w) {
+                        dist[v] = dist[u] + w;
+                        q.push(v);
+                    }
+                }
+            }
+        };
+        for (auto i = 0; i < N; ++i)
+            // dijkstra(i, dist[i]);
+            // bellmanFord(dist[i]);
+            SPFA(i, dist[i]);
         return minCity();
     }
 };
+
 
 int main() {
     Solution solution;
