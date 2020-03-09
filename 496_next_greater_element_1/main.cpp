@@ -15,25 +15,21 @@ class Solution {
 public:
     using VI = vector<int>;
     using Map = unordered_map<int, int>;
-    VI nextGreaterElement(VI& A, VI& B, Map m = {}, VI ans = {}) {
+    VI nextGreaterElement(VI& A, VI& B, Map m = {}, VI s = {}, VI ans = {}) {
         int N = B.size();
-        if (N == 0)
-            return {};
-        for (auto i = 0; i + 1 < N; ++i) {
-            auto j = i + 1;
-            for (; j < N && B[i] > B[j]; ++j);
-            if (j == N)
+        for (auto i = N - 1; i >= 0; --i) {
+            while (!s.empty() && B[i] > s.back())
+                s.pop_back();
+            if (s.empty())
                 m[B[i]] = -1;
             else
-                m[B[i]] = B[j];
+                m[B[i]] = s.back();
+            s.push_back(B[i]);
         }
-        m[B.back()] = -1;
         transform(A.begin(), A.end(), back_inserter(ans), [&](auto x) { return m[x]; });
         return ans;
     }
 };
-
-// TODO: use a stack to generate the map more efficiently in O(N) time
 
 int main() {
     std::cout << "Hello, World!" << std::endl;
