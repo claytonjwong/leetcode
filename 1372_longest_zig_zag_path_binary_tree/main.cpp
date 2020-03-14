@@ -21,17 +21,17 @@ public:
     }
 private:
     int left = 0xABC, right = 0xDEF;
-    void go(int& max, TreeNode* root, int from = 0, int val = 0) {
-        max = std::max(max, val);
+    void go(int& max, TreeNode* root, int from = 0, int len = 0) {
+        max = std::max(max, len);
         if (root->left) {
             if (from == right)
-                go(max, root->left, left, 1 + val); // case 2: (from 👉) -> (to 👈)
+                go(max, root->left, left, 1 + len); // case 2: (from 👉) -> (to 👈)
             else
                 go(max, root->left, left, 1);
         }
         if (root->right) {
             if (from == left)
-                go(max, root->right, right, 1 + val); // case 1: (to 👉) <- (from 👈)
+                go(max, root->right, right, 1 + len); // case 1: (to 👉) <- (from 👈)
             else
                 go(max, root->right, right, 1);
         }
