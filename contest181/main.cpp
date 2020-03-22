@@ -26,7 +26,7 @@ namespace Question1 {
     public:
         using VI = vector<int>;
         VI createTargetArray(VI& nums, VI& index, VI ans = {}) {
-            for (auto i = 0; i < nums.size(); ++i)
+            for (auto i{ 0 }; i < nums.size(); ++i)
                 ans.insert(ans.begin() + index[i], nums[i]);
             return ans;
         }
@@ -48,7 +48,7 @@ namespace Question2 {
         using Set = unordered_set<int>;
         int sumFourDivisors(VI& A, int sum = 0) {
             auto getDivisors = [](auto x, Set divs = {}) {
-                for (auto i = 1; i <= sqrt(x); ++i)
+                for (auto i{ 1 }; i <= sqrt(x); ++i)
                     if (x % i == 0)
                         divs.insert(i),
                         divs.insert(x / i);
