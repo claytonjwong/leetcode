@@ -21,7 +21,7 @@ public:
             for (auto i{ 1 }; i <= sqrt(x); ++i)
                 if (x % i == 0)
                     divs.insert(i),
-                            divs.insert(x / i);
+                    divs.insert(x / i);
             return divs;
         };
         for (auto x: A) {
