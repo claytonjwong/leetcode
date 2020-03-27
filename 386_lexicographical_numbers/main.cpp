@@ -1,57 +1,28 @@
+/*
+ * 386. Lexicographical Numbers
+ *
+ * Q: https://leetcode.com/problems/lexicographical-numbers/
+ * A: https://leetcode.com/problems/lexicographical-numbers/discuss/414893/Javascript-and-C%2B%2B-solutions
+ */
+
 #include <iostream>
 #include <sstream>
 #include <vector>
-#include <map>
-#include <unordered_set>
-#include <queue>
 
 using namespace std;
 
-/*
 class Solution {
 public:
     using VI = vector<int>;
-    VI lexicalOrder(int N, map<string, int> m={}, unordered_set<int> seen={}, VI ans={}) {
-        auto gen = [](auto i) -> pair<string, int> {
-            ostringstream os;
-            os << i;
-            return {os.str(), i};
-        };
-        for (auto i=1; i <= N; i *= 10) {
-            m.emplace(gen(i));
-            seen.insert(i);
+    using VS = vector<string>;
+    VI lexicalOrder(int N, VS S = {}, VI A = {}) {
+        while (N) {
+            stringstream ss; ss << N--;
+            S.push_back(ss.str());
         }
-        while (ans.size() < N) {
-            ans.push_back(m.begin()->second);
-            auto next = m.begin()->second + 1;
-            m.erase(m.begin());
-            if (next <= N && seen.find(next) == seen.end())
-                m.insert(gen(next));
-        }
-        return ans;
-    }
-};
-*/
-
-// the above solution is silly... just use a priority queue and also just use to_string to make a r-value pair instead of gen()
-class Solution {
-public:
-    using VI = vector<int>;
-    struct Cmp { bool operator()(const int lhs, const int rhs) const { return to_string(lhs) > to_string(rhs); } };
-    using Queue = priority_queue<int, VI, Cmp>;
-    VI lexicalOrder(int N, Queue q={}, unordered_set<int> seen={}, VI ans={}) {
-        for (auto i=1; i <= N; i *= 10) {
-            q.push(i);
-            seen.insert(i);
-        }
-        while (ans.size() < N) {
-            auto cur = q.top(); q.pop();
-            ans.push_back(cur);
-            auto next = cur + 1;
-            if (next <= N && seen.find(next) == seen.end())
-                q.push(next);
-        }
-        return ans;
+        sort(S.begin(), S.end());
+        transform(S.begin(), S.end(), back_inserter(A), [](auto& s) { return stoi(s); });
+        return A;
     }
 };
 
