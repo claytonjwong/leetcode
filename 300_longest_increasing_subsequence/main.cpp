@@ -24,6 +24,66 @@
 
 using namespace std;
 
+namespace BruteForce {
+    class Solution {
+    public:
+        using VI = vector<int>;
+        int lengthOfLIS(VI& A) {
+            return go(A);
+        }
+    private:
+        int go(VI& A, int i = -1, VI&& seq = {}) {
+            int max = seq.size();
+            for (auto j{ i + 1 }; j < A.size(); ++j) {
+                if (seq.empty() || seq.back() < A[j]) {
+                    seq.push_back(A[j]);
+                    max = std::max(max, go(A, j, move(seq)));
+                    seq.pop_back();
+                }
+            }
+            return max;
+        }
+    };
+}
+
+namespace BruteForceOptimized {
+    class Solution {
+    public:
+        using VI = vector<int>;
+        int lengthOfLIS(VI& A) {
+            return go(A);
+        }
+    private:
+        static constexpr auto INF = 1e9 + 7;
+        int go(VI& A, int i = -1, int last = -INF, int len = 0) {
+            int max = len;
+            for (auto j{ i + 1 }; j < A.size(); ++j)
+                if (last < A[j])
+                    max = std::max(max, go(A, j, A[j], len + 1));
+            return max;
+        }
+    };
+}
+
+namespace BruteForceOptimizedFurther {
+    class Solution {
+    public:
+        using VI = vector<int>;
+        int lengthOfLIS(VI& A) {
+            return go(A);
+        }
+    private:
+        static constexpr auto INF = 1e9 + 7;
+        int go(VI& A, int i = -1, int last = -INF) {
+            auto max{ 0 };
+            for (auto j{ i + 1 }; j < A.size(); ++j)
+                if (last < A[j])
+                    max = std::max(max, 1 + go(A, j, A[j]));
+            return max;
+        }
+    };
+}
+
 namespace TopDown {
     class Solution {
     public:
@@ -70,8 +130,8 @@ namespace BottomUp {
 }
 
 int main() {
-    TopDown::Solution solution;
-    TopDown::Solution::VI A{10,9,2,5,3,7,101,18};
+    BruteForceOptimized::Solution solution;
+    BruteForceOptimized::Solution::VI A{10,9,2,5,3,7,101,18};
     cout << solution.lengthOfLIS(A) << endl;
     return 0;
 }
