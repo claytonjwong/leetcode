@@ -82,8 +82,8 @@ public:
     using VVI = vector<VI>;
     int minDistance(string A, string B) {
         auto [M, N] = make_tuple(A.size(), B.size());
-        VI pre, cur(N + 1);
-        generate_n(back_inserter(pre), N + 1, [i = -1]() mutable { return ++i; });
+        VI pre(N + 1), cur(N + 1);
+        iota(pre.begin(), pre.end(), 0);
         for (auto i = 1; i <= M; ++i) {
             cur[0] = i;
             for (auto j = 1; j <= N; ++j) {
