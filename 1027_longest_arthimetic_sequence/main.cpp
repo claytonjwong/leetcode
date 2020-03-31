@@ -52,16 +52,32 @@ namespace Concise {
 //        }
 //    };
 
+//    class Solution {
+//    public:
+//        using VI = vector<int>;
+//        using Map = unordered_map<int, unordered_map<int, int>>;
+//        int longestArithSeqLength(VI& A, Map dp = {}, int max = 0) { // dp is {diff: {index: len}}
+//            int N = A.size();
+//            for (auto i = 0; i < N; ++i)
+//                for (auto j = i + 1, k = 0; j < N; ++j)
+//                    k = A[j] - A[i],
+//                    max = std::max(max, dp[k][j] = 1 + (dp[k][i] ? dp[k][i] : 1));
+//            return max;
+//        }
+//    };
+
     class Solution {
     public:
         using VI = vector<int>;
-        using Map = unordered_map<int, unordered_map<int, int>>;
-        int longestArithSeqLength(VI& A, Map dp = {}, int max = 0) { // dp is {diff: {index: len}}
+        using Memo = unordered_map<int, unordered_map<int, int>>;
+        int longestArithSeqLength(VI& A, Memo m = {}, int max = 0) {
             int N = A.size();
-            for (auto i = 0; i < N; ++i)
-                for (auto j = i + 1, k = 0; j < N; ++j)
-                    k = A[j] - A[i],
-                    max = std::max(max, dp[k][j] = 1 + (dp[k][i] ? dp[k][i] : 1));
+            for (auto j{ 0 }; j < N; ++j) {
+                for (auto i{ 0 }; i < j; ++i) {
+                    auto k = A[j] - A[i];
+                    max = std::max(max, m[k][j] = 1 + (m[k][i] ? m[k][i] : 1));
+                }
+            }
             return max;
         }
     };
