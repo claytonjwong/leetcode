@@ -47,6 +47,23 @@ namespace BottomUp {
     };
 }
 
+namespace BottomUpMemoryOptimized {
+    class Solution {
+    public:
+        using VI= vector<int>;
+        int uniquePaths(int M, int N) {
+            VI pre(N, 1),
+               cur(N, 1);
+            for (auto i{ 1 }; i < M; ++i) {
+                for (auto j{ 1 }; j < N; ++j)
+                    cur[j] = pre[j] + cur[j - 1];
+                swap(pre, cur);
+            }
+            return pre[N - 1];
+        }
+    };
+}
+
 int main() {
     std::cout << "Hello, World!" << std::endl;
     return 0;
