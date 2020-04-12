@@ -21,7 +21,7 @@ public:
             if (c == '&') i = k;
             if (c == ';') j = k;
             if (i < j) {
-                auto N = int(ans.size()) - (j - i + 1); // N == |text[i..j]| (+1 for i..j inclusive)
+                auto N = int(ans.size()) - (j - i + 1); // N is the index of text[i..j] (+1 for i..j inclusive)
                 auto T = ans.substr(N); // target 🎯
                 if (map.find(T) != map.end()) {
                     ans = ans.substr(0, N); // remove text[i..j]
