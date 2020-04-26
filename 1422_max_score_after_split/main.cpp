@@ -16,11 +16,11 @@ namespace Question1_Count_Zero_and_One {
         int maxScore(string S, int max = 0) {
             int N = S.size();
             int zero = S[0] == '0',
-                    one = count_if(S.begin() + 1, S.end(), [](auto c) { return c == '1'; });
+                one = count_if(S.begin() + 1, S.end(), [](auto c) { return c == '1'; });
             for (auto i{ 1 }; i < N; ++i) {
                 max = std::max(max, zero + one);
                 zero += S[i] == '0';
-                one -= S[i] == '1';
+                 one -= S[i] == '1';
             }
             return max;
         }
@@ -34,7 +34,7 @@ namespace Question1_Prefix_Sums {
             transform(S.begin(), S.end(), back_inserter(A), [](auto c) { return c - '0'; });
             int N = A.size();
             VI L(N),
-                    R(N);
+               R(N);
             for (auto i{ 0 }; i < N; ++i)
                 L[i] = (A[i] == 0) + (i > 0 ? L[i - 1] : 0);     // prefix sums from 👉 (L)eft-to-right
             for (auto i{ N - 1 }; i >= 0; --i)
