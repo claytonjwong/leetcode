@@ -1,0 +1,6 @@
+cmake_minimum_required(VERSION 3.15)
+project(1431_kids_with_greatest_number_of_candies)
+
+set(CMAKE_CXX_STANDARD 17)
+
+add_executable(1431_kids_with_greatest_number_of_candies main.cpp)
