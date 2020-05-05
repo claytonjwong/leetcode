@@ -1,0 +1,6 @@
+cmake_minimum_required(VERSION 3.15)
+project(865_smallest_subtree_with_all_deepest_nodes)
+
+set(CMAKE_CXX_STANDARD 14)
+
+add_executable(865_smallest_subtree_with_all_deepest_nodes main.cpp)
