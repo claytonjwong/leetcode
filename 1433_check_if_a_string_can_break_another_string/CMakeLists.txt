@@ -1,0 +1,6 @@
+cmake_minimum_required(VERSION 3.15)
+project(1433_check_if_a_string_can_break_another_string)
+
+set(CMAKE_CXX_STANDARD 17)
+
+add_executable(1433_check_if_a_string_can_break_another_string main.cpp)
