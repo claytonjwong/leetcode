@@ -1,0 +1,6 @@
+cmake_minimum_required(VERSION 3.15)
+project(1437_check_if_all_1s_are_at_least_length_K_places_away)
+
+set(CMAKE_CXX_STANDARD 17)
+
+add_executable(1437_check_if_all_1s_are_at_least_length_K_places_away main.cpp)
