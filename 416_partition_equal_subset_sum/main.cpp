@@ -21,8 +21,8 @@ namespace TopDown {
             return total % 2 ? false : go(A, total / 2);
         }
     private:
-        using Set = unordered_map<int, unordered_map<int, bool>>;
-        bool go(VI& A, int T, int i = 0, Set&& seen = {}) {
+        using Map = unordered_map<int, unordered_map<int, bool>>;
+        bool go(VI& A, int T, int i = 0, Map&& seen = {}) {
             if (T < 0 || seen[T][i])
                 return false;
             seen[T][i] = true;
