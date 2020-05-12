@@ -13,6 +13,35 @@
 
 using namespace std;
 
+namespace DFS {
+    class Solution {
+    public:
+        using VI = vector<int>;
+        using VVI = vector<VI>;
+        using VB = vector<bool>;
+        using Set = unordered_set<int>;
+        using Map = unordered_map<int, Set>;
+        int minTime(int _, VVI& E, VB& A, Map m = {}, int ans = 0) {
+            for (auto& edge: E) {
+                auto [u, v] = tie(edge[0], edge[1]);
+                m[u].insert(v);
+                m[v].insert(u);
+            }
+            go(ans, A, m);
+            return ans;
+        }
+    private:
+        bool go(int& ans, VB& A, Map& m, int u = 0, Set&& seen = {}) {
+            seen.insert(u);
+            bool found = A[u];
+            for (auto v: m[u])
+                if (seen.find(v) == seen.end() && go(ans, A, m, v, move(seen)))
+                    ans += 2, found = true; // apple found in subtree v 🎯
+            return found;
+        }
+    };
+}
+
 namespace BellmanFord {
     class Solution {
     public:
