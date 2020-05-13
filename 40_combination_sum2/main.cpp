@@ -16,28 +16,27 @@ class Solution {
 public:
     using VI = vector<int>;
     using VVI = vector<VI>;
-    VVI combinationSum2(VI& A, int target, VVI ans = {}) {
-        dfs(A, target, ans);
+    VVI combinationSum2(VI& A, int T, VVI ans = {}) {
+        sort(A.begin(), A.end());
+        dfs(A, T, ans);
         return ans;
     }
 private:
     using Seen = unordered_set<string>;
     void dfs(VI& A, int sum, VVI& ans, int start = 0, VI&& path = {}, Seen&& seen = {}) {
         if (sum == 0) {
-            auto sorted = path;
-            sort(sorted.begin(), sorted.end());
             ostringstream key;
-            copy(sorted.begin(), sorted.end(), ostream_iterator<int>(key, ","));
+            copy(path.begin(), path.end(), ostream_iterator<int>(key, ","));
             if (seen.insert(key.str()).second)
-                ans.push_back(sorted);
+                ans.push_back(path);
             return;
         }
         for (auto i = start; i < A.size(); ++i) {
-            if (sum - A[i] < 0)
-                continue;
-            path.push_back(A[i]);
-            dfs(A, sum - A[i], ans, i + 1, move(path), move(seen));
-            path.pop_back();
+            if (sum - A[i] >= 0) {
+                path.push_back(A[i]);
+                dfs(A, sum - A[i], ans, i + 1, move(path), move(seen));
+                path.pop_back();
+            }
         }
     }
 };
