@@ -1,0 +1,6 @@
+cmake_minimum_required(VERSION 3.15)
+project(674_longest_continuous_increasing_subsequence)
+
+set(CMAKE_CXX_STANDARD 14)
+
+add_executable(674_longest_continuous_increasing_subsequence main.cpp)
