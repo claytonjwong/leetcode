@@ -38,3 +38,10 @@ Exceptions to top-down rec first, and bottom-up DP second.
 Sometimes it is easier to just start with bottom-up DP...
 
 https://leetcode.com/problems/paint-house/description/
+
+
+
+Standard Top-Down + Bottom-Up:
+
+[139. Word Break](https://leetcode.com/problems/word-break/discuss/632205/Javascript-and-C%2B%2B-solutions)
+
