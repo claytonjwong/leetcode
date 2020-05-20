@@ -20,15 +20,9 @@ public:
     using Map = unordered_map<int, set<string>>;
     VI peopleIndexes(VVS& A, Map m = {}, VI ans = {}) {
         for_each(A.begin(), A.end(), [i = -1, &m](auto& row) mutable { ++i; m[i] = set<string>{ row.begin(), row.end() }; });
-        auto isSubset = [&](auto i, auto j) {
-            if (i == j)
-                return false;
-            VS same;
-            set_intersection(m[i].begin(), m[i].end(), m[j].begin(), m[j].end(), back_inserter(same));
-            return m[i].size() == same.size();
-        };
+        auto isSubset = [&](auto i, auto j) { return i != j && includes(m[j].begin(), m[j].end(), m[i].begin(), m[i].end()); };
         auto N = A.size();
-        for (auto i{ 0 }; i < N; ++i) {
+        for (auto i{ 0 }, j{ 0 }; i < N; ++i) {
             auto ok = true;
             for (auto j{ 0 }; j < N; ++j) {
                 if (isSubset(i, j)) {
