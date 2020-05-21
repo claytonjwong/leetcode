@@ -27,16 +27,17 @@ using namespace std;
 class Solution {
 public:
     using VI = vector<int>;
-    int trap(VI& A, int ans = 0) {
+    int trap(VI& A, int sum = 0) {
         int N = A.size();
-        if (N < 3)
-            return 0;
-        auto beg = 0, end = N - 1;
-        VI L(N, A[beg]); for (auto i = beg + 1; i <  N; ++i) L[i] = max(L[i - 1], A[i]);
-        VI R(N, A[end]); for (auto i = end - 1; i > -1; --i) R[i] = max(R[i + 1], A[i]);
-        for (auto i = 1; i + 1 < N; ++i)
-            ans += max(min(L[i], R[i]) - A[i], 0);
-        return ans;
+        VI L(N),
+                R(N);
+        auto beg{ 0 },
+                end{ N - 1 };
+        for (auto i{ beg }; i < N;  ++i) L[i] = max(A[i], i > beg ? L[i - 1] : 0); // (L)eft-to-right 👉
+        for (auto j{ end }; 0 <= j; --j) R[j] = max(A[j], j < end ? R[j + 1] : 0); // (R)ight-to-left 👈
+        for (auto i{ 1 }; i + 1 < N; ++i)
+            sum += min(L[i], R[i]) - A[i]; // accumulate water sum per column i 🎯
+        return sum;
     }
 };
 
