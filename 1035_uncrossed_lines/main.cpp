@@ -75,6 +75,28 @@ namespace BottomUp {
     };
 }
 
+namespace BottomUpMemOpt {
+    class Solution {
+    public:
+        using VI = vector<int>;
+        int maxUncrossedLines(VI& A, VI& B) {
+            auto M = A.size(),
+                 N = B.size();
+            VI pre(N + 1, 0),
+               cur{ pre };
+            for (auto i{ 1 }; i <= M; ++i) {
+                for (auto j{ 1 }; j <= N; ++j)
+                    cur[j] = max({
+                        pre[j - 1] + int(A[i - 1] == B[j - 1]), // match 🎯 / mismatch
+                        cur[j - 1], pre[j]                      // insertion / deletion
+                    });
+                swap(pre, cur);
+            }
+            return pre[N];
+        }
+    };
+}
+
 int main() {
     std::cout << "Hello, World!" << std::endl;
     return 0;
