@@ -41,14 +41,15 @@ https://leetcode.com/problems/paint-house/description/
 
 
 
-Standard Top-Down + Bottom-Up:
+Top-Down + Bottom-Up:
 
 [5. Longest Palindromic Substring](https://leetcode.com/problems/longest-palindromic-substring/discuss/635659/Javascript-and-C%2B%2B-solutions)
 [139. Word Break](https://leetcode.com/problems/word-break/discuss/632205/Javascript-and-C%2B%2B-solutions)
 [1035. Uncrossed Lines](https://leetcode.com/problems/uncrossed-lines/discuss/652184/Javascript-and-C%2B%2B-solutions)
+[1458. Max Dot Product of Two Subsequences](https://leetcode.com/problems/max-dot-product-of-two-subsequences/discuss/653625/Javascript-and-C%2B%2B-solutions)
 
 
-Recurrence Relation to Reduce Asymptotic Bounds via Precalculations:
+Recurrence Relation to Reduce Asymptotic Bounds via Pre-calculations:
 
 [42. Trapping Rain Water](https://leetcode.com/problems/trapping-rain-water/discuss/512006/Javascript-and-C%2B%2B-solutions)
 
