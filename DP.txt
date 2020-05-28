@@ -59,3 +59,6 @@ Recurrence Relation to Minimize or Maximize an Objective Function:
 [1277. Count Square Submatrices with All Ones](https://leetcode.com/problems/count-square-submatrices-with-all-ones/discuss/442151/Javascript-and-C%2B%2B-solutions)
 
 
+Bottom-Up Sequentially Building Upon "Buckets" of Previous Solutions (is this a good title???):
+
+[338. Counting Bits](https://leetcode.com/problems/counting-bits/discuss/657068/Javascript-and-C%2B%2B-solutions)
