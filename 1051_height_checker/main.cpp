@@ -10,17 +10,31 @@
 
 using namespace std;
 
-class Solution {
-public:
-    using VI = vector<int>;
-    int heightChecker(VI& A, int diff = 0) {
-        VI B{ A };
-        sort(B.begin(), B.end());
-        for (auto i{ 0 }; i < A.size(); ++i)
-            diff += A[i] != B[i];
-        return diff;
-    }
-};
+namespace Functional {
+    class Solution {
+    public:
+        using VI = vector<int>;
+        int heightChecker(VI& A) {
+            VI B{ A };
+            sort(B.begin(), B.end());
+            return count_if(A.begin(), A.end(), [i = -1, &A, &B](auto x) mutable { ++i; return A[i] != B[i]; });
+        }
+    };
+}
+
+namespace Procedural {
+    class Solution {
+    public:
+        using VI = vector<int>;
+        int heightChecker(VI& A, int diff = 0) {
+            VI B{ A };
+            sort(B.begin(), B.end());
+            for (auto i{ 0 }; i < A.size(); ++i)
+                diff += A[i] != B[i];
+            return diff;
+        }
+    };
+}
 
 int main() {
     std::cout << "Hello, World!" << std::endl;
