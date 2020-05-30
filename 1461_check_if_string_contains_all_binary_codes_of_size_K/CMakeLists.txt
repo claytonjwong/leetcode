@@ -1,0 +1,6 @@
+cmake_minimum_required(VERSION 3.15)
+project(1461_check_if_string_contains_all_binary_codes_of_size_K)
+
+set(CMAKE_CXX_STANDARD 17)
+
+add_executable(1461_check_if_string_contains_all_binary_codes_of_size_K main.cpp)
