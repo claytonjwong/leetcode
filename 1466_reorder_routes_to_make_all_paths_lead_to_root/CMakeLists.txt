@@ -1,0 +1,6 @@
+cmake_minimum_required(VERSION 3.15)
+project(1466_reorder_routes_to_make_all_paths_lead_to_root)
+
+set(CMAKE_CXX_STANDARD 17)
+
+add_executable(1466_reorder_routes_to_make_all_paths_lead_to_root main.cpp)
