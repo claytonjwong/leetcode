@@ -55,6 +55,7 @@ https://leetcode.com/problems/paint-house/description/
 Recurrence Relation to Reduce Asymptotic Bounds via Pre-calculations:
 
 [42. Trapping Rain Water](https://leetcode.com/problems/trapping-rain-water/discuss/512006/Javascript-and-C%2B%2B-solutions)
+[307. Range Sum Query - Mutable](https://leetcode.com/problems/range-sum-query-mutable/discuss/665390/Javascript-and-C%2B%2B-solutions)
 
 
 Recurrence Relation to Minimize or Maximize an Objective Function:
