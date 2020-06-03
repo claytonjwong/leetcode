@@ -14,23 +14,21 @@ class Solution {
 public:
     using VI = vector<int>;
     using VVI = vector<VI>;
-    VVI combinationSum(VI& A, int target, VVI ans = {}) {
-        dfs(A, target, ans);
+    VVI combinationSum(VI& A, int T, VVI ans = {}) {
+        go(ans, A, T);
         return ans;
     }
 private:
-    void dfs(VI& A, int sum, VVI& ans, int start = 0, VI&& path = {}) {
-        if (sum == 0) {
+    void go(VVI& ans, VI& A, int sum, int start = 0, VI&& path = {}) {
+        if (!sum) {
             ans.push_back(path);
             return;
         }
-        for (auto i = start; i < A.size(); ++i) {
-            if (sum - A[i] < 0)
-                continue;
-            path.push_back(A[i]);
-            dfs(A, sum - A[i], ans, i, move(path));
-            path.pop_back();
-        }
+        for (auto i{ start }; i < A.size(); ++i)
+            if (0 <= sum - A[i])
+                path.push_back(A[i]),
+                go(ans, A, sum - A[i], i, move(path)),
+                path.pop_back();
     }
 };
 
