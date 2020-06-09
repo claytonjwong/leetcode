@@ -41,11 +41,45 @@ https://leetcode.com/problems/paint-house/description/
 
 
 
-1-Dimensional Top-Down + Bottom-Up:
+ART:
+	1. All possibilities are considered via brute-force Top-Down DFS
+	2. Remember subproblem solutions via Memoization
+	3. Turn the Top-Down solution upside-down to create a Bottom-Up solution and optionally optimize memory
+
+Step 1 can be challenging because it requires a a basic knowledge of mathematical induction and also requires
+a mental leap of faith to "see" the recursion (ie. the recursive stack) in the mind's eye:
+	ie. for an arbitrary (i)th solution we can assume we already know the optimal solution for the (i - 1)th subproblem via mathematical induction
+	towards a deterministic set of base case(s), begin able to "see", the recursive stack, how it "bottoms out" (ie. hits the base case) and begins to unwind.
+		This is difficult at first, but as with all things, can be improved upon in time.  I feel that solving problems related to recursive tree traversals
+		are helpful practice to start "seeing" the recursive stack "bottom out" and unwind in the mind's eye.  Also drawing a picture of the recursive stack
+		if helpful to begin imaging the "shape" of the recursion and how recursive calls iteratively approach the base case(s).  The Towers of Hanoi are a very
+		fun and interesting way to explore recursion and recursive algorithms.  "Seeing is believing." --Far Seer
+
+Note: also consider pruning conditions of sub-optimal candidates before each recursive call, sometimes these are necessary to avoid TLE.
+
+Step 2 is trivial
+
+Step 3 can be challenging because the base cases must be explicitly specified *before* being constrained-built upon.  The Top-Down solutions allow for the base cases to be implied
+by the recursion towards the base case and thus implicitly stored by the memo as each recursive stack "bottoms out" (ie. hits the base case and begins to unwind).
+
+Optional Memory Optimization:
+
+After step 3, it may be possible to optimize memory.  For example, if we have a 2D matrix for the DP memo, but the current row is only dependent upon
+the previous row, then we can reduce memory from O(N^2) to O(N) by replacing dp[i] with cur (ie. current row) and dp[i - 1] with pre (ie. previous row).
+Furthermore, if cur is only dependent upon itself, then we can also remove pre (see [322. Coin Change](https://leetcode.com/problems/coin-change/discuss/677858/Javascript-and-C%2B%2B-solutions)
+and [518. Coin Change 2](https://leetcode.com/problems/coin-change-2/discuss/677893/Javascript-and-C%2B%2B-solutions) as examples of this supplemental memory optimization which reduces
+the memory by a constant factor of N, ie. we only need N memory instead of 2 * N memory).
+
+
+
+The Usual Suspects: N-Dimensional Top-Down + Bottom-Up:
 
 [5. Longest Palindromic Substring](https://leetcode.com/problems/longest-palindromic-substring/discuss/635659/Javascript-and-C%2B%2B-solutions)
 [72. Edit Distance](https://leetcode.com/problems/edit-distance/discuss/479377/Javascript-and-C%2B%2B-solutions)
 [139. Word Break](https://leetcode.com/problems/word-break/discuss/632205/Javascript-and-C%2B%2B-solutions)
+[221. Maximal Square](https://leetcode.com/problems/maximal-square/discuss/600365/Javascript-and-C%2B%2B-solutions)
+[322. Coin Change](https://leetcode.com/problems/coin-change/discuss/677858/Javascript-and-C%2B%2B-solutions)
+[518. Coin Change 2](https://leetcode.com/problems/coin-change-2/discuss/677893/Javascript-and-C%2B%2B-solutions)
 [1035. Uncrossed Lines](https://leetcode.com/problems/uncrossed-lines/discuss/652184/Javascript-and-C%2B%2B-solutions)
 [1406. Stone Game III](https://leetcode.com/problems/stone-game-iii/discuss/657825/Javascript-and-C%2B%2B-solutions)
 [1458. Max Dot Product of Two Subsequences](https://leetcode.com/problems/max-dot-product-of-two-subsequences/discuss/653625/Javascript-and-C%2B%2B-solutions)
@@ -55,6 +89,7 @@ https://leetcode.com/problems/paint-house/description/
 Recurrence Relation to Reduce Asymptotic Bounds via Pre-calculations:
 
 [42. Trapping Rain Water](https://leetcode.com/problems/trapping-rain-water/discuss/512006/Javascript-and-C%2B%2B-solutions)
+[304. Range Sum Query 2D - Immutable](https://leetcode.com/problems/range-sum-query-2d-immutable/discuss/508260/Javascript-and-C%2B%2B-solutions)
 [307. Range Sum Query - Mutable](https://leetcode.com/problems/range-sum-query-mutable/discuss/665390/Javascript-and-C%2B%2B-solutions)
 
 
@@ -63,6 +98,6 @@ Recurrence Relation to Minimize or Maximize an Objective Function:
 [1277. Count Square Submatrices with All Ones](https://leetcode.com/problems/count-square-submatrices-with-all-ones/discuss/442151/Javascript-and-C%2B%2B-solutions)
 
 
-Bottom-Up Sequentially Building Upon "Buckets" of Previous Solutions (is this a good title???):
+Bottom-Up Sequentially Building Upon "K-th Buckets" of Previous Solutions (is this a good title???):
 
 [338. Counting Bits](https://leetcode.com/problems/counting-bits/discuss/657068/Javascript-and-C%2B%2B-solutions)
