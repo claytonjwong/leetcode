@@ -40,6 +40,20 @@ Sometimes it is easier to just start with bottom-up DP...
 https://leetcode.com/problems/paint-house/description/
 
 
+You choose how you spend your time.  Algorithms are a Marathon, not a Sprint:
+
+"You rarely have time for everything you want in this life, so you need to make choices. And hopefully your choices can come from a deep sense of who you are." -Mr. Rogers
+
+
+Inspirational Quotes:
+
+
+"We will never know our full potential unless we push ourselves to find it." -Travis Rice
+
+“Take the first step in faith. You don't have to see the whole staircase, just take the first step.” -Martin Luther King Jr.
+
+“Don't only practice your art, but force your way into its secrets.  For it and knowledge can raise men to the divine.” -Ludwig van Beethoven
+
 
 ART:
 	1. All possibilities are considered via brute-force Top-Down DFS
@@ -48,7 +62,7 @@ ART:
 
 Step 1 can be challenging because it requires a a basic knowledge of mathematical induction and also requires
 a mental leap of faith to "see" the recursion (ie. the recursive stack) in the mind's eye:
-	ie. for an arbitrary (i)th solution we can assume we already know the optimal solution for the (i - 1)th subproblem via mathematical induction
+	ie. the subproblem within the problem: for an arbitrary (i)th solution we can assume we already know the optimal solution for the (i - 1)th subproblem via mathematical induction
 	towards a deterministic set of base case(s), begin able to "see", the recursive stack, how it "bottoms out" (ie. hits the base case) and begins to unwind.
 		This is difficult at first, but as with all things, can be improved upon in time.  I feel that solving problems related to recursive tree traversals
 		are helpful practice to start "seeing" the recursive stack "bottom out" and unwind in the mind's eye.  Also drawing a picture of the recursive stack
@@ -60,7 +74,8 @@ Note: also consider pruning conditions of sub-optimal candidates before each rec
 Step 2 is trivial
 
 Step 3 can be challenging because the base cases must be explicitly specified *before* being constrained-built upon.  The Top-Down solutions allow for the base cases to be implied
-by the recursion towards the base case and thus implicitly stored by the memo as each recursive stack "bottoms out" (ie. hits the base case and begins to unwind).
+by the recursion towards the base case and thus implicitly stored by the memo as each recursive stack "bottoms out" (ie. hits the base case and begins to unwind).  It can be helpful
+to print the memoized table from the Top-Down DFS with Memo solution to identify the bases cases and the bottom-up recurrence relation.
 
 Optional Memory Optimization:
 
@@ -91,6 +106,7 @@ Recurrence Relation to Reduce Asymptotic Bounds via Pre-calculations:
 [42. Trapping Rain Water](https://leetcode.com/problems/trapping-rain-water/discuss/512006/Javascript-and-C%2B%2B-solutions)
 [304. Range Sum Query 2D - Immutable](https://leetcode.com/problems/range-sum-query-2d-immutable/discuss/508260/Javascript-and-C%2B%2B-solutions)
 [307. Range Sum Query - Mutable](https://leetcode.com/problems/range-sum-query-mutable/discuss/665390/Javascript-and-C%2B%2B-solutions)
+[1139. Largest 1-Bordered Square](https://leetcode.com/problems/largest-1-bordered-square/discuss/681894/Javascript-and-C%2B%2B-solutions)
 
 
 Recurrence Relation to Minimize or Maximize an Objective Function:
@@ -101,3 +117,4 @@ Recurrence Relation to Minimize or Maximize an Objective Function:
 Bottom-Up Sequentially Building Upon "K-th Buckets" of Previous Solutions (is this a good title???):
 
 [338. Counting Bits](https://leetcode.com/problems/counting-bits/discuss/657068/Javascript-and-C%2B%2B-solutions)
+
