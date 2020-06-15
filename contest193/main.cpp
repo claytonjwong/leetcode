@@ -13,7 +13,7 @@
 using namespace std;
 
 /*
- * Running Sum of 1d Array
+ * 1480. Running Sum of 1d Array
  *
  * Q: https://leetcode.com/problems/running-sum-of-1d-array/
  * A: https://leetcode.com/problems/running-sum-of-1d-array/discuss/686233/Javascript-and-C%2B%2B-solutions
@@ -30,7 +30,7 @@ namespace Question1 {
 }
 
 /*
- * Least Number of Unique Integers after K Removals
+ * 1481. Least Number of Unique Integers after K Removals
  *
  * Q: https://leetcode.com/problems/least-number-of-unique-integers-after-k-removals/
  * A: https://leetcode.com/problems/least-number-of-unique-integers-after-k-removals/discuss/686410/Javascript-and-C%2B%2B-solutions
