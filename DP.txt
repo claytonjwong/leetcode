@@ -66,8 +66,8 @@ a mental leap of faith to "see" the recursion (ie. the recursive stack) in the m
 	towards a deterministic set of base case(s), begin able to "see", the recursive stack, how it "bottoms out" (ie. hits the base case) and begins to unwind.
 		This is difficult at first, but as with all things, can be improved upon in time.  I feel that solving problems related to recursive tree traversals
 		are helpful practice to start "seeing" the recursive stack "bottom out" and unwind in the mind's eye.  Also drawing a picture of the recursive stack
-		if helpful to begin imaging the "shape" of the recursion and how recursive calls iteratively approach the base case(s).  The Towers of Hanoi are a very
-		fun and interesting way to explore recursion and recursive algorithms.  "Seeing is believing." --Far Seer
+		is helpful to begin imagining the "shape" of the recursion and how recursive calls iteratively approach the base case(s) ie. "bottom out".
+		The Towers of Hanoi are a very fun and interesting way to explore recursion and recursive algorithms.  "Seeing is believing." --Far Seer
 
 Note: also consider pruning conditions of sub-optimal candidates before each recursive call, sometimes these are necessary to avoid TLE.
 
@@ -95,6 +95,7 @@ The Usual Suspects: N-Dimensional Top-Down + Bottom-Up:
 [221. Maximal Square](https://leetcode.com/problems/maximal-square/discuss/600365/Javascript-and-C%2B%2B-solutions)
 [322. Coin Change](https://leetcode.com/problems/coin-change/discuss/677858/Javascript-and-C%2B%2B-solutions)
 [518. Coin Change 2](https://leetcode.com/problems/coin-change-2/discuss/677893/Javascript-and-C%2B%2B-solutions)
+[787. Cheapest Flights Within K Stops](https://leetcode.com/problems/cheapest-flights-within-k-stops/discuss/690997/Javascript-and-C%2B%2B-solutions)
 [1035. Uncrossed Lines](https://leetcode.com/problems/uncrossed-lines/discuss/652184/Javascript-and-C%2B%2B-solutions)
 [1406. Stone Game III](https://leetcode.com/problems/stone-game-iii/discuss/657825/Javascript-and-C%2B%2B-solutions)
 [1458. Max Dot Product of Two Subsequences](https://leetcode.com/problems/max-dot-product-of-two-subsequences/discuss/653625/Javascript-and-C%2B%2B-solutions)
