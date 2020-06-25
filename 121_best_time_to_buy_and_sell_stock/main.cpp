@@ -10,17 +10,34 @@
 
 using namespace std;
 
-class Solution {
-public:
-    using VI = vector<int>;
-    int maxProfit(VI& A, int ans = 0) {
-        int low = A.empty() ? -1 : A[0];
-        for (auto x: A)
-            ans = max(ans, x - low),
-            low = min(low, x);
-        return ans;
-    }
-};
+namespace MonotonicallyDecreasingStack {
+    class Solution {
+    public:
+        using VI = vector<int>;
+        int maxProfit(VI& A, VI stack = {}, int max = 0) {
+            for (auto x: A) {
+                if (stack.empty() || x < stack.back())
+                    stack.push_back(x);
+                max = std::max(max, x - stack.back());
+            }
+            return max;
+        }
+    };
+}
+
+namespace TrackMinimum {
+    class Solution {
+    public:
+        using VI = vector<int>;
+        int maxProfit(VI& A, int min = 1e9 + 7, int max = 0) {
+            for (auto x: A) {
+                min = std::min(min, x);
+                max = std::max(max, x - min);
+            }
+            return max;
+        }
+    };
+}
 
 int main() {
     std::cout << "Hello, World!" << std::endl;
