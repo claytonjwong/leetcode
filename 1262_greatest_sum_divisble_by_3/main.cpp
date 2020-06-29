@@ -21,7 +21,7 @@ namespace Verbose {
             for (auto i{1}; i <= N; ++i) {
                 buckets[i] = buckets[i - 1]; // create current from previous 🤔
                 for (auto j: VI{0, 1, 2}) {
-                    auto sum = A[i - 1] + buckets[i - 1][j]; // add A[i] onto each previous bucket (-1 for buckets offset by 1)
+                    auto sum = A[i - 1] + buckets[i - 1][j]; // add A[i] onto each previous bucket (A[i - 1] for A[i] because buckets is offset by 1)
                     buckets[i][sum % 3] = max(buckets[i][sum % 3], sum); // update each (current sum % 3) bucket to max of itself and the current sum
                 }
             }
@@ -40,7 +40,7 @@ namespace MemOpt {
             for (auto i{ 1 }; i <= N; ++i) {
                 auto pre{ cur }; // create current from previous 🤔
                 for (auto j: VI{ 0, 1, 2 }) {
-                    auto sum = A[i - 1] + pre[j]; // add A[i] onto each previous bucket (-1 for buckets offset by 1)
+                    auto sum = A[i - 1] + pre[j]; // add A[i] onto each previous bucket (A[i - 1] for A[i] because buckets is offset by 1)
                     cur[sum % 3] = max(cur[sum % 3], sum); // update each (current sum % 3) bucket to max of itself and the current sum
                 }
             }
