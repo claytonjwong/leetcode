@@ -48,6 +48,24 @@ namespace Concise {
     };
 }
 
+namespace MostConcise {
+    class Solution {
+    public:
+        using VI = vector<int>;
+        int findMin(VI& A) {
+            int N = A.size(),
+                i = 0,
+                j = N - 1;
+            while (i < j && A[j] < A[i]) {
+                auto k = (i + j) / 2;
+                if (A[j] <= A[k]) i = k + 1; // case 2: k is in the 👈 left-most maximal partition of A
+                if (A[k] <= A[j]) j = k;     // case 3: k is in the 👉 right-most minimal partition of A
+            }
+            return A[i];
+        }
+    };
+}
+
 int main() {
     std::cout << "Hello, World!" << std::endl;
     return 0;
