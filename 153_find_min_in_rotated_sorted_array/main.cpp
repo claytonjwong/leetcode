@@ -56,7 +56,7 @@ namespace MostConcise {
             int N = A.size(),
                 i = 0,
                 j = N - 1;
-            while (i < j && A[j] < A[i]) {
+            while (i < j && A[j] < A[i]) {   // case 1: if not (A[j] < A[i]), then (A[i] <= A[j]), thus i..j is sorted and A[i] is the minimum 🎯
                 auto k = (i + j) / 2;
                 if (A[j] <= A[k]) i = k + 1; // case 2: k is in the 👈 left-most maximal partition of A
                 if (A[k] <= A[j]) j = k;     // case 3: k is in the 👉 right-most minimal partition of A
