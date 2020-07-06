@@ -1,0 +1,6 @@
+cmake_minimum_required(VERSION 3.15)
+project(1502_can_make_arithmetic_progression_from_sequence)
+
+set(CMAKE_CXX_STANDARD 17)
+
+add_executable(1502_can_make_arithmetic_progression_from_sequence main.cpp)
