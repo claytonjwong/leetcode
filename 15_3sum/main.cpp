@@ -18,7 +18,7 @@ public:
         sort(A.begin(), A.end());
         int N = A.size(),
             i = 0;
-        while (i + 2 < N) {
+        while (i + 2 < N) { // +2 to make room for j and k
             auto j = i + 1,
                  k = N - 1;
             while (j < k) { // ⭐️ 2sum window [ j ... k ]
