@@ -6,6 +6,9 @@
  */
 
 #include <iostream>
+#include <vector>
+
+using namespace std;
 
 class Node {
 public:
@@ -13,8 +16,40 @@ public:
     Node* prev;
     Node* next;
     Node* child;
+    Node(int val, Node* prev, Node* next, Node* child) : val{ val }, prev{ prev }, next{ next }, child{ child } {}
 };
 
+namespace Iterative {
+    class Solution {
+    public:
+        Node* flatten(Node* head, vector<Node*> stack = {}) {
+            auto sentinel = new Node(-1, nullptr, head, nullptr);
+            auto pre = sentinel,
+                 cur = sentinel->next;
+            while (cur || stack.size()) {
+                if (!cur) { // ⭐️ done exploring level, link tail node of this level to next node of level above 👆
+                    cur = stack.back(); stack.pop_back(); // next node of level above 🤔
+                    pre->next = cur; // 🔗 tail node of previous level 👉 next node of current level
+                    cur->prev = pre; // 🔗 tail node of previous level 👈 next node of current level
+                }
+                if (cur->child) { // start exploring level below 👇, store next node of current level 🤔
+                    if (cur->next)
+                        stack.push_back(cur->next);
+                    cur->next = cur->child; // 🔗 current node 👉 child of current node
+                    cur->child->prev = cur; // 🔗 current node 👈 child of current node
+                    cur->child = nullptr; // 🚫 remove child to flatten list
+                }
+                pre = cur;
+                cur = cur->next;
+            }
+            return head;
+        }
+    };
+}
+
+namespace Recursive {
+
+}
 class Solution {
 public:
     Node* flatten(Node* head) {
