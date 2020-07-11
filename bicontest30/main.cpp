@@ -81,8 +81,9 @@ namespace Question2 {
  *
  * Q: https://leetcode.com/problems/minimum-difference-between-largest-and-smallest-value-in-three-moves/
  * A: https://leetcode.com/problems/minimum-difference-between-largest-and-smallest-value-in-three-moves/discuss/730531/Javascript-and-C%2B%2B-solutions
+ * A: https://leetcode.com/problems/minimum-difference-between-largest-and-smallest-value-in-three-moves/discuss/731233/Similar-to-1423.-Maximum-Points-You-Can-Obtain-from-Cards
  */
-namespace Question3 {
+namespace Question3_Verbose {
     class Solution {
     public:
         using VI = vector<int>;
@@ -101,6 +102,22 @@ namespace Question3 {
                 A.push_front(A.back()), A.pop_back();
             }
             return min;
+        }
+    };
+}
+namespace Question3_Concise {
+    class Solution {
+    public:
+        using VI = vector<int>;
+        static constexpr int INF = 2e9 + 7;
+        int minDifference(VI& A, int min = INF) {
+            sort(A.begin(), A.end());
+            int N = A.size(),
+                i = 0,
+                j = N - 4;
+            while (0 <= j && j < N)
+                min = std::min(min, A[j++] - A[i++]); // slide window by 3 👉
+            return min < INF ? min : 0;
         }
     };
 }
