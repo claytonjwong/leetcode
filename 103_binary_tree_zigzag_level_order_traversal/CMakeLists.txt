@@ -1,0 +1,6 @@
+cmake_minimum_required(VERSION 3.16)
+project(103_binary_tree_zigzag_level_order_traversal)
+
+set(CMAKE_CXX_STANDARD 17)
+
+add_executable(103_binary_tree_zigzag_level_order_traversal main.cpp)
