@@ -2,7 +2,7 @@
  * 1519. Number of Nodes in the Sub-Tree With the Same Label
  *
  * Q: https://leetcode.com/problems/number-of-nodes-in-the-sub-tree-with-the-same-label/
- * A: https://leetcode.com/problems/number-of-nodes-in-the-sub-tree-with-the-same-label/discuss/746462/Javascript-Python3-C%2B%2B-post-order-traversal
+ * A: https://leetcode.com/problems/number-of-nodes-in-the-sub-tree-with-the-same-label/discuss/749295/Javascript-Python3-C%2B%2B-post-order-traversal
  */
 
 #include <iostream>
@@ -19,14 +19,13 @@ class Solution {
     VVI adj;
     string keys;
     Set seen;
-    VI go(int u = 0, VI next = VI(26)) {
-        seen.insert(u); // seen u 👀
+    VI go(int u = 0, int parent = -1, VI next = VI(26)) {
         for (auto v: adj[u]) {
-            if (seen.find(v) != seen.end()) // 🚫 skip previously seen parent 👀
+            if (v == parent) // 🚫 skip parent
                 continue;
-            auto cur = go(v); // 🚀 explore child v
-            for (auto i{ 0 }; i < 26; ++i) // 🎯 post-order accumulate keys for child node v
-                next[i] += cur[i];
+            auto cur = go(v, u); // 🚀 explore child v
+            for (auto i{ 0 }; i < 26; ++i)
+                next[i] += cur[i]; // 🎯 post-order accumulate keys for child node v
         }
         ans[u] = ++next[keys[u] - 'a']; // 🎯 increment key for current node u
         return next;
