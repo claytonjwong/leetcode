@@ -17,8 +17,7 @@ public:
     bool book(int i, int j, int bookings = 0) {
         ++m[i]; // add candidate booking [i..j)
         --m[j];
-        for (auto it = m.begin(); it != m.end(); ++it) { // ⭐️ linear scan from beginning to accumulate existing bookings
-            auto [time, cnt] = *it;
+        for (auto [time, cnt]: m) { // ⭐️ linear scan from beginning to accumulate existing bookings
             if (j <= time) // ✅ time exceeds the [i..j) interval
                 break;
             if (2 < (bookings += cnt)) { // ❌ 2 bookings exceeded
