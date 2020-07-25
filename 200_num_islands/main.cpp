@@ -1,3 +1,10 @@
+/*
+ * 200. Number of Islands
+ *
+ * Q: https://leetcode.com/problems/number-of-islands/
+ * A: https://leetcode.com/problems/number-of-islands/discuss/753546/Javascript-Python3-C%2B%2B-DFS-%2B-BFS
+ */
+
 #include <iostream>
 #include <vector>
 #include <queue>
@@ -5,76 +12,66 @@
 
 using namespace std;
 
-/*
- * 200. Number of Islands
- *
- * Q: https://leetcode.com/problems/number-of-islands/
- * A: https://leetcode.com/problems/number-of-islands/discuss/528817/Javascript-and-C%2B%2B-solutions
- */
-
-
-// class Solution {
-// public:
-//     using Grid = vector<vector<char>>;
-//     using Seen = unordered_map<int, unordered_map<int, bool>>;
-//     using Dirs = vector<tuple<int, int>>;
-//     int numIslands(Grid& A, int color = 0) {
-//         auto M = A.size(),
-//              N = M == 0 ? 0 : A[0].size();
-//         for (auto i = 0; i < M; ++i)
-//             for (auto j = 0; j < N; ++j)
-//                 if (A[i][j] == '1')
-//                     ++color, go(A, color, i, j);
-//         return color;
-//     }
-// private:
-//     Dirs dirs = {{-1,0},{0,1},{1,0},{0,-1}};
-//     void go(Grid& A, int color, int i, int j, Seen&& seen = {}) {
-//         auto M = A.size(),
-//              N = M == 0 ? 0 : A[0].size();
-//         if (i < 0 || i >= M || j < 0 || j >= N || A[i][j] != '1' || seen[i][j])
-//             return;
-//         A[i][j] += color;
-//         seen[i][j] = true;
-//         for (auto [u, v]: dirs)
-//             go(A, color, i + u, j + v, move(seen));
-//     }
-// };
-
-class Solution {
-public:
-    using Grid = vector<vector<char>>;
-    int numIslands(Grid& A, int color = 0) {
-        auto M = A.size(),
-                N = M == 0 ? 0 : A[0].size();
-        for (auto i = 0; i < M; ++i)
-            for (auto j = 0; j < N; ++j)
-                if (A[i][j] == '1')
-                    ++color, bfs(A, color, i, j);
-        return color;
-    }
-private:
-    using Seen = unordered_map<int, unordered_map<int, bool>>;
-    vector<vector<int>> dirs = {{-1,0},{0,1},{1,0},{0,-1}};
-    void bfs(Grid& A, int color, int i, int j, Seen seen = {}) {
-        auto M = A.size(),
-                N = M == 0 ? 0 : A[0].size();
-        queue<tuple<int, int>> q{{{i, j}}};
-        seen[i][j] = true;
-        while (!q.empty()) {
-            auto [i, j] = q.front(); q.pop();
-            A[i][j] += color;
-            for (auto& dir: dirs) {
-                int u = i + dir[0],
-                        v = j + dir[1];
-                if (u < 0 || u >= M || v < 0 || v >= N || A[u][v] != '1' || seen[u][v])
-                    continue;
-                q.push({u, v});
-                seen[u][v] = true;
-            }
+namespace DFS {
+    class Solution {
+        using Grid = vector<vector<char>>;
+        using Map = unordered_map<int, unordered_map<int, bool>>;
+        using Dirs = vector<tuple<int, int>>;
+        Grid A;
+        int M, N;
+        Map seen;
+        int go(int i, int j) {
+            if (i < 0 || i == M || j < 0 || j == N || A[i][j] == '0' || seen[i][j]) // 🛑 OOB, water, or already seen 👀
+                return 0;
+            seen[i][j] = true;
+            for (auto [u, v]: Dirs{{i - 1, j}, {i, j + 1}, {i + 1, j}, {i, j - 1}}) // 🚀 DFS explore adj u,v [👆, 👉, 👇, 👈]
+                go(u, v);
+            return 1;
         }
-    }
-};
+    public:
+        int numIslands(Grid& A_, int cnt = 0) {
+            A = A_;
+            M = A.size();
+            N = M ? A[0].size() : 0;
+            for (auto i{ 0 }; i < M; ++i)
+                for (auto j{ 0 }; j < N; ++j)
+                    cnt += go(i, j);
+            return cnt;
+        }
+    };
+}
+
+namespace BFS {
+    class Solution {
+    public:
+        using Grid = vector<vector<char>>;
+        using Map = unordered_map<int, unordered_map<int, bool>>;
+        using Pair = pair<int, int>;
+        using Dirs = vector<Pair>;
+        using Queue = queue<Pair>;
+        int numIslands(Grid& A, Map seen = {}, int cnt = 0) {
+            int M = A.size(),
+                N = M ? A[0].size() : 0;
+            auto bfs = [&](auto row, auto col) {
+                if (A[row][col] == '0' || seen[row][col])
+                    return 0;
+                seen[row][col] = true;
+                Queue q{{{ row, col }}};
+                while (q.size()) {
+                    auto [i, j] = q.front(); q.pop();
+                    for (auto [u, v]: Dirs{{i - 1, j}, {i, j + 1}, {i + 1, j}, {i, j - 1}}) // 🚌 BFS explore adj u,v [👆, 👉, 👇, 👈]
+                        if (!(u < 0 || u == M || v < 0 || v == N || A[u][v] == '0' || seen[u][v])) // if *not* OOB, water, or already seen 👀
+                            q.push({ u, v }), seen[u][v] = true;
+                }
+                return 1;
+            };
+            for (auto i{ 0 }; i < M; ++i)
+                for (auto j{ 0 }; j < N; ++j)
+                    cnt += bfs(i, j);
+            return cnt;
+        }
+    };
+}
 
 int main() {
     std::cout << "Hello, World!" << std::endl;

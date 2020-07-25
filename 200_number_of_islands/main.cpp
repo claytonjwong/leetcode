@@ -17,7 +17,7 @@ public:
     using Seen = unordered_map<int, unordered_map<int, bool>>;
     int numIslands(Grid& A, Seen seen = {}, int cnt = 0) {
         int M = A.size(),
-                N = !M ? 0 : A[0].size();
+            N = !M ? 0 : A[0].size();
         for (auto i{ 0 }; i < M; ++i)
             for (auto j{ 0 }; j < N; ++j)
                 if (A[i][j] == '1' && !seen[i][j])
