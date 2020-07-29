@@ -11,27 +11,28 @@
 using namespace std;
 
 class Solution {
-public:
-    using VS = vector<string>;
-    string getHappyString(int N, int K, VS happy = {}) {
-        go(happy, N);
-        if (happy.size() >= K)
-            return happy[K - 1]; // -1 for 0-based index 🎯
-        return {};
-    }
-private:
-    void go(VS& happy, int chars, string&& S = {}) {
-        if (chars == 0) {
-            happy.push_back(S);
+    string ans;
+    int N, K;
+    void go(int i = 0, string&& path = {}) {
+        if (!K)
+            return;
+        if (i == N) {
+            if (!--K)
+                ans = path; // 🎯 K-th happy string
             return;
         }
-        for (auto c: string{"abc"}) {
-            if (!S.empty() && c == S.back())
-                continue; // not a happy string ❌
-            S.push_back(c);
-            go(happy, chars - 1, move(S));
-            S.pop_back();
-        }
+        for (auto c: string{ "abc" })
+            if (path.empty() || c != path.back())
+                path.push_back(c),     // 👀 ✅ path forward-tracking
+                go(i + 1, move(path)), // 🚀 DFS explore path
+                path.pop_back();       // 👀 🚫 path back-tracking
+    }
+public:
+    string getHappyString(int N_, int K_) {
+        N = N_;
+        K = K_;
+        go();
+        return ans;
     }
 };
 
