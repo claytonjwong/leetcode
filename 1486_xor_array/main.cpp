@@ -7,14 +7,25 @@
 
 #include <iostream>
 
-class Solution {
-public:
-    int xorOperation(int N, int start, int ans = 0) {
-        for (auto i{ 0 }; i < N; ++i)
-            ans ^= start + 2 * i;
-        return ans;
-    }
-};
+namespace Recursive {
+    class Solution {
+    public:
+        int xorOperation(int n, int x) {
+            return n == 1 ? x : x ^ xorOperation(n - 1, x + 2);
+        }
+    };
+}
+
+namespace Iterative {
+    class Solution {
+    public:
+        int xorOperation(int N, int start, int ans = 0) {
+            for (auto i{ 0 }; i < N; ++i)
+                ans ^= start + 2 * i;
+            return ans;
+        }
+    };
+}
 
 int main() {
     std::cout << "Hello, World!" << std::endl;
