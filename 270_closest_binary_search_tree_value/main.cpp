@@ -19,18 +19,18 @@ struct TreeNode {
 
 class Solution {
 public:
-    int closestValue(TreeNode* root, double target, int ans = -1) {
-        go(ans, root, target);
-        return ans;
-    }
-private:
-    void go(int& ans, TreeNode* root, double target, double best = numeric_limits<double>::max()) {
-        auto diff = abs(target - root->val);
-        if (best > diff)
-            best = diff,
-            ans = root->val;
-        if (root->left) go(ans, root->left, target, best);
-        if (root->right) go(ans, root->right, target, best);
+    using fun = function<void(TreeNode*)>;
+    int closestValue(TreeNode* root, double T, double best = numeric_limits<double>::max()) {
+        fun go = [&](TreeNode* root) {
+            if (!root)
+                return;
+            if (abs(root->val - T) < abs(best - T))
+                best = root->val;
+            go(root->left);
+            go(root->right);
+        };
+        go(root);
+        return best;
     }
 };
 
