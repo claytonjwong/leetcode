@@ -15,45 +15,24 @@ struct TreeNode {
     TreeNode(int val) : val{ val }, left{ nullptr }, right{ nullptr } {}
 };
 
-namespace Concise {
-    class Solution {
-        int T;
-        int dfs(TreeNode* root, int sum = 0) {
-            return !root ? 0
-                : int(sum + root->val == T) + dfs(root->left, sum + root->val) + dfs(root->right, sum + root->val);
-        }
-        int go(TreeNode* root) {
-            return !root ? 0 : dfs(root) + go(root->left) + go(root->right);
-        }
-    public:
-        int pathSum(TreeNode* root, int sum) {
-            T = sum;
-            return go(root);
-        }
-    };
-}
-
-namespace Verbose {
-    class Solution {
-        int T;
-        int dfs(TreeNode* root, int sum = 0) {
+class Solution {
+public:
+    using fun = function<int(TreeNode*, int)>;
+    int pathSum(TreeNode* root, int T) {
+        fun go = [&](TreeNode* root, int sum = 0) {
             if (!root)
                 return 0;
             sum += root->val;
-            return int(sum == T) + dfs(root->left, sum) + dfs(root->right, sum);
-        }
-        int go(TreeNode* root) {
+            return int(sum == T) + go(root->left, sum) + go(root->right, sum);
+        };
+        fun traverse = [&](TreeNode* root, int _ = 0) {
             if (!root)
                 return 0;
-            return dfs(root) + go(root->left) + go(root->right);
-        }
-    public:
-        int pathSum(TreeNode* root, int sum) {
-            T = sum;
-            return go(root);
-        }
-    };
-}
+            return go(root, _) + traverse(root->left, _) + traverse(root->right, _);
+        };
+        return traverse(root, 0);
+    }
+};
 
 int main() {
     std::cout << "Hello, World!" << std::endl;
