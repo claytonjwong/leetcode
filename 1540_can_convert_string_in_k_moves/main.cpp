@@ -10,27 +10,51 @@
 
 using namespace std;
 
-class Solution {
-public:
-    using Map = unordered_map<int, int>;
-    bool canConvertString(string s, string t, int K, Map need = {}, int needs = 0) {
-        if (s.size() != t.size())
-            return false;
-        // ✅ add needs
-        for (auto i{ 0 }; i < s.size(); ++i) {
-            auto diff = (t[i] - s[i] + 26) % 26;
-            if (diff)
-                ++need[diff], ++needs;
+namespace Verbose {
+    class Solution {
+    public:
+        using Map = unordered_map<int, int>;
+        bool canConvertString(string s, string t, int K, Map need = {}, int needs = 0) {
+            if (s.size() != t.size())
+                return false;
+            // ✅ add needs
+            for (auto i{ 0 }; i < s.size(); ++i) {
+                auto diff = (t[i] - s[i] + 26) % 26;
+                if (diff)
+                    ++need[diff], ++needs;
+            }
+            // 🚫 del needs
+            for (auto i{ 1 }; i <= K && needs; ++i) {
+                auto diff = i % 26;
+                if (need[diff])
+                    --need[diff], --needs;
+            }
+            return !needs; // 🎯 no needs
         }
-        // 🚫 del needs
-        for (auto i{ 1 }; i <= K && needs; ++i) {
-            auto diff = i % 26;
-            if (need[diff])
-                --need[diff], --needs;
+    };
+}
+
+namespace Concise {
+    class Solution {
+    public:
+        using Map = unordered_map<int, int>;
+        bool canConvertString(string s, string t, int T, Map need = {}) {
+            if (s.size() != t.size())
+                return false;
+            // ✅ add needs
+            for (auto i{ 0 }; i < s.size(); ++i) {
+                auto k = (t[i] - s[i] + 26) % 26;
+                if (k)
+                    ++need[k];
+            }
+            // check if T is 🚫 insufficient for the needs
+            for (auto [k, cnt]: need)
+                if (T < k + (cnt - 1) * 26)
+                    return false;
+            return true; // 🎯 T is sufficient for the needs
         }
-        return !needs; // 🎯 no needs
-    }
-};
+    };
+}
 
 int main() {
     std::cout << "Hello, World!" << std::endl;
