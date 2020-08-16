@@ -2,7 +2,7 @@
  * 884. Uncommon Words from Two Sentences
  *
  * Q: https://leetcode.com/problems/uncommon-words-from-two-sentences/
- * A: https://leetcode.com/problems/uncommon-words-from-two-sentences/discuss/159907/Javascript-Python3-C%2B%2B-Hash-Table
+ * A: https://leetcode.com/problems/uncommon-words-from-two-sentences/discuss/159907/Javascript-Python3-C%2B%2B-Word-Counter
  */
 
 #include <iostream>
