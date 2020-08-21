@@ -2,7 +2,7 @@
  * 1267. Count Servers that Communicate
  *
  * Q: https://leetcode.com/problems/count-servers-that-communicate/
- * A: https://leetcode.com/problems/count-servers-that-communicate/discuss/438394/Javascript-and-C%2B%2B-solutions
+ * A: https://leetcode.com/problems/count-servers-that-communicate/discuss/438394/Javascript-Python3-C%2B%2B-Count-per-Row-and-Column
  */
 
 #include <iostream>
@@ -14,22 +14,22 @@ class Solution {
 public:
     using VI = vector<int>;
     using VVI = vector<VI>;
-    using Servers = vector<tuple<int,int>>;
-    int countServers(VVI& A, Servers servers={}, int ans=0) {
+    using Servers = vector<tuple<int, int>>;
+    int countServers(VVI& A, Servers servers = {}, int cnt = 0) {
         int M = A.size(),
             N = A[0].size();
         VI row(M),
-            col(N);
-        for (auto i=0; i < M; ++i)
-            for (auto j=0; j < N; ++j)
+           col(N);
+        for (auto i{ 0 }; i < M; ++i)
+            for (auto j{ 0 }; j < N; ++j)
                 if (A[i][j] == 1)
-                    servers.push_back({i,j}),
-                        ++row[i],
-                        ++col[j];
-        for (auto [i,j]: servers)
-            if (row[i] > 1 || col[j] > 1)
-                ++ans;
-        return ans;
+                    servers.push_back({ i, j }),
+                    ++row[i],
+                    ++col[j];
+        for (auto [i, j]: servers)
+            if (1 < row[i] || 1 < col[j])
+                ++cnt;
+        return cnt;
     }
 };
 
