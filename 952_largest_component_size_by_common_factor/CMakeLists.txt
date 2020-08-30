@@ -1,0 +1,6 @@
+cmake_minimum_required(VERSION 3.16)
+project(952_largest_component_size_by_common_factor)
+
+set(CMAKE_CXX_STANDARD 17)
+
+add_executable(952_largest_component_size_by_common_factor main.cpp)
