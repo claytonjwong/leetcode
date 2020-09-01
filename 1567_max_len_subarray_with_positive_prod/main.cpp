@@ -13,7 +13,7 @@ using namespace std;
 class Solution {
 public:
     using VI = vector<int>;
-    int getMaxLen(VI& A, int cnt = 0, int max = 0) {
+    int getMaxLen(VI& A, int even = 1, int max = 0) {
         A.push_back(0);  // ⭐️ sentinel value
         int N = A.size(),
             i = 0,
@@ -22,15 +22,15 @@ public:
             // case 1: ➖ collapse window [i 👉 ..j]
             while (j < N && !A[j]) {
                 while (i < j) {
-                    cnt = A[i++] < 0 ? cnt - 1 : cnt;
-                    max = cnt & 1 ? max : std::max(max, j - i);
+                    if (A[i++] < 0) even ^= 1;
+                    if (even) max = std::max(max, j - i);
                 }
                 i = ++j;
             }
             // case 2: ➕ expand window [i..j 👉 ]
             while (j < N && A[j]) {
-                cnt = A[j++] < 0 ? cnt + 1 : cnt;
-                max = cnt & 1 ? max : std::max(max, j - i);
+                if (A[j++] < 0) even ^= 1;
+                if (even) max = std::max(max, j - i);
             }
         }
         return max;
