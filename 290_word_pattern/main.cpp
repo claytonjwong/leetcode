@@ -2,7 +2,7 @@
  * 290. Word Pattern
  *
  * Q: https://leetcode.com/problems/word-pattern/
- * A: https://leetcode.com/problems/word-pattern/discuss/622795/Javascript-and-C%2B%2B-solutions
+ * A: https://leetcode.com/problems/word-pattern/discuss/622795/Javascript-Python3-C%2B%2B-.-Map-solutions
  */
 
 #include <iostream>
@@ -15,21 +15,22 @@ using namespace std;
 
 class Solution {
 public:
-    using VS = vector<string>;
-    using Map = unordered_map<char, string>;
-    using Set = unordered_set<string>;
-    bool wordPattern(string P, string words, VS A = {}, Map m = {}, Set seen = {}) {
-        istringstream is{ words };
-        for (string word; is >> word; A.push_back(word));
-        if (P.size() != A.size())
+    using Pattern = unordered_map<char, string>;
+    using Text = unordered_map<string, char>;
+    using Words = vector<string>;
+    bool wordPattern(string chars, string B, string word = {}, Words words = {}, Pattern P = {}, Text T = {}) {
+        for (istringstream is{ B }; is >> word; words.emplace_back(word));
+        if (chars.size() != words.size())
             return false;
-        for (auto i{ 0 }; i < A.size(); ++i) {
-            if (m.find(P[i]) == m.end() && seen.insert(A[i]).second)
-                m[P[i]] = A[i];
-            if (m[P[i]] != A[i])
-                return false;
+        int N = chars.size();
+        for (auto i{ 0 }; i < N; ++i) {
+            auto [ c, w ] = tie(chars[i], words[i]);
+            if (P.find(c) != P.end() && P[c] != w) return false;  // 🚫 char c not mapped to word w
+            if (T.find(w) != T.end() && T[w] != c) return false;  // 🚫 word w not mapped to char c
+            if (P.find(c) == P.end()) P[c] = w;                   // map char c 👉 word w
+            if (T.find(w) == T.end()) T[w] = c;                   // map word w 👉 char c
         }
-        return true;
+        return true;  // ✅ OK
     }
 };
 
