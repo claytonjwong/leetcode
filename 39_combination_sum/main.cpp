@@ -2,7 +2,7 @@
  * 39. Combination Sum
  *
  * Q: https://leetcode.com/problems/combination-sum/
- * A: https://leetcode.com/problems/combination-sum/discuss/506331/Javascript-and-C%2B%2B-solutions
+ * A: https://leetcode.com/problems/combination-sum/discuss/506331/Javascript-Python3-C%2B%2B-DFS-%2B-BT-solutions
  */
 
 #include <iostream>
@@ -14,21 +14,21 @@ class Solution {
 public:
     using VI = vector<int>;
     using VVI = vector<VI>;
-    VVI combinationSum(VI& A, int T, VVI ans = {}) {
-        go(ans, A, T);
-        return ans;
-    }
-private:
-    void go(VVI& ans, VI& A, int sum, int start = 0, VI&& path = {}) {
-        if (!sum) {
-            ans.push_back(path);
-            return;
-        }
-        for (auto i{ start }; i < A.size(); ++i)
-            if (0 <= sum - A[i])
-                path.push_back(A[i]),
-                go(ans, A, sum - A[i], i, move(path)),
-                path.pop_back();
+    using fun = function<VVI(int, int, VI&&)>;
+    VVI combinationSum(VI& A, int T, VVI paths = {}) {
+        fun go = [&](int start, int t, VI&& path = {}) -> VVI {
+            if (!t) {
+                paths.emplace_back(path);         // 🎯 unique path with target sum T
+                return {};
+            }
+            for (auto i{ start }; i < A.size(); ++i)
+                if (0 <= t - A[i])
+                    path.push_back(A[i]),         // 👀 ✅ forward-tracking
+                    go(i, t - A[i], move(path)),  // 🚀 recursively explore path
+                    path.pop_back();              // 👀 🚫 back-tracking
+            return paths;
+        };
+        return go(0, T, {});
     }
 };
 
