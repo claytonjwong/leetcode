@@ -19,15 +19,14 @@ public:
         fun go = [&](auto n, auto t, VI&& path = {}) -> VVI {
             if (!n && !t) {
                 paths.emplace_back(VI{ path.begin(), path.end() });  // 🎯 unique path of N nums with T sum
-                return VVI{};
+                return {};
             }
             if (!n || !t)
-                return VVI{};
-            for (auto i = path.size() ? path.back() + 1 : 1; i < 10 && 0 <= t - i; ++i) {
-                path.push_back(i);             // 👀 ✅ forward-tracking
-                go(n - 1, t - i, move(path));  // 🚀 recursively explore path
+                return {};
+            for (auto i = path.size() ? path.back() + 1 : 1; i < 10 && 0 <= t - i; ++i)
+                path.push_back(i),             // 👀 ✅ forward-tracking
+                go(n - 1, t - i, move(path)),  // 🚀 recursively explore path
                 path.pop_back();               // 👀 🚫 back-tracking
-            }
             return paths;
         };
         return go(N, T, {});
