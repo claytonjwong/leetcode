@@ -2,7 +2,7 @@
  * 40. Combination Sum II
  *
  * Q: https://leetcode.com/problems/combination-sum-ii/
- * A: https://leetcode.com/problems/combination-sum-ii/discuss/506360/Javascript-and-C%2B%2B-solutions
+ * A: https://leetcode.com/problems/combination-sum-ii/discuss/506360/Javascript-Python3-C%2B%2B-DFS-%2B-BT-solutions
  */
 
 #include <iostream>
@@ -16,28 +16,30 @@ class Solution {
 public:
     using VI = vector<int>;
     using VVI = vector<VI>;
-    VVI combinationSum2(VI& A, int T, VVI ans = {}) {
-        sort(A.begin(), A.end());
-        dfs(A, T, ans);
-        return ans;
-    }
-private:
-    using Seen = unordered_set<string>;
-    void dfs(VI& A, int sum, VVI& ans, int start = 0, VI&& path = {}, Seen&& seen = {}) {
-        if (sum == 0) {
-            ostringstream key;
-            copy(path.begin(), path.end(), ostream_iterator<int>(key, ","));
-            if (seen.insert(key.str()).second)
-                ans.push_back(path);
-            return;
-        }
-        for (auto i = start; i < A.size(); ++i) {
-            if (sum - A[i] >= 0) {
-                path.push_back(A[i]);
-                dfs(A, sum - A[i], ans, i + 1, move(path), move(seen));
-                path.pop_back();
+    using fun = function<VVI(int, int, VI&&)>;
+    using Set = unordered_set<string>;
+    VVI combinationSum2(VI& A, int T, Set seen = {}, VVI paths = {}) {
+        auto hash = [](auto path) {
+            stringstream ss;
+            sort(path.begin(), path.end());
+            copy(path.begin(), path.end(), ostream_iterator<int>(ss, ","));
+            return ss.str();
+        };
+        fun go = [&](int start, int t, VI&& path = {}) -> VVI {
+            if (!t) {
+                auto key = hash(path);
+                if (seen.insert(key).second)
+                    paths.emplace_back(VI{ path.begin(), path.end() });  // 🎯 unique path with target sum T
+                return {};
             }
-        }
+            for (auto i{ start }; i < A.size(); ++i)
+                if (0 <= t - A[i])
+                    path.push_back(A[i]),             // 👀 ✅ forward-tracking
+                    go(i + 1, t - A[i], move(path)),  // 🚀 recursively explore path with implicit 👀 forward/back-tracking
+                    path.pop_back();                  // 👀 🚫 back-tracking
+            return paths;
+        };
+        return go(0, T, {});
     }
 };
 
