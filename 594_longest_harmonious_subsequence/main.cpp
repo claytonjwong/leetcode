@@ -2,7 +2,7 @@
  * 594. Longest Harmonious Subsequence
  *
  * Q: https://leetcode.com/problems/longest-harmonious-subsequence/
- * A: https://leetcode.com/problems/longest-harmonious-subsequence/discuss/592722/Javascript-and-C%2B%2B-solutions
+ * A: https://leetcode.com/problems/longest-harmonious-subsequence/discuss/846353/Javascript-Python3-C%2B%2B-Map-solutions
  */
 
 #include <iostream>
