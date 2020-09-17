@@ -13,10 +13,10 @@ class Solution {
 public:
     enum Dir { U, R, D, L };                                    // 🗺 clockwise directions
     bool isRobotBounded(string A, int K = 4, int dir = U) {
-        auto [ x, y ] = make_tuple(0, 0);                       // ⭐️ origin
-        while (K--) {                                           // 🔍 can we return to ⭐️ origin within 4 traversals?
+        auto [ x, y ] = make_tuple(0, 0);                       // 🌎 origin
+        while (K--) {                                           // 🔍 can we return to 🌎 origin within 4 traversals?
             for (auto c: A) {
-                if (c == 'G') {                                 // 🚌 step forward
+                if (c == 'G') {                                 // 🚀 step forward
                     if (dir == U) --x; if (dir == D) ++x;
                     if (dir == L) --y; if (dir == R) ++y;
                 }
@@ -24,7 +24,7 @@ public:
                 if (c == 'R' && L < ++dir) dir = U;             // 👉 turn right
             }
             if (!x && !y)
-                return true;                                    // 🎯 returned to ⭐️ origin after 1, 2, or 4 traversals
+                return true;                                    // 🎯 returned to 🌎 origin after 1, 2, or 4 traversals
         }
         return false;
     }
