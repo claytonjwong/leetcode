@@ -31,19 +31,12 @@ public:
         };
         go(root);
     }
-    bool hasNext() {
-        return i + 1 < A.size();
-    }
-    int next() {
-        return A[++i];
-    }
-    bool hasPrev() {
-        return 0 < i;
-    }
 
-    int prev() {
-        return A[--i];
-    }
+    bool hasPrev() { return 0 < i; }
+    bool hasNext() { return i + 1 < A.size(); }
+
+    int prev() { return A[--i]; }
+    int next() { return A[++i]; }
 };
 
 int main() {
