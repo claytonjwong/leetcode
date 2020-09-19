@@ -8,39 +8,75 @@
 #include <iostream>
 #include <vector>
 #include <numeric>
+#include <unordered_set>
 
 using namespace std;
 
-class Solution {
-public:
-    using VI = vector<int>;
-    using VVI = vector<VI>;
-    using fun = function<int(int)>;
-    int minCostConnectPoints(VVI& A, VVI E = {}, int cost = 0) {
-        int N = A.size();
-        VI P(N); iota(P.begin(), P.end(), 0);                                    // 🙂 parent representatives of disjoint sets
-        for (auto u{ 0 }; u < N; ++u) {
-            for (auto v{ u + 1 }; v < N; ++v) {
-                auto w = abs(A[u][0] - A[v][0]) + abs(A[u][1] - A[v][1]);
-                E.push_back({ u, v, w });                                        // 🗺 edge u, v with weight w 💰
+namespace Kruskal {
+    class Solution {
+    public:
+        using VI = vector<int>;
+        using VVI = vector<VI>;
+        using fun = function<int(int)>;
+        int minCostConnectPoints(VVI& A, VVI E = {}, int cost = 0) {
+            int N = A.size();
+            VI P(N); iota(P.begin(), P.end(), 0);                                    // 🙂 parent representatives of disjoint sets
+            for (auto u{ 0 }; u < N; ++u) {
+                for (auto v{ u + 1 }; v < N; ++v) {
+                    auto w = abs(A[u][0] - A[v][0]) + abs(A[u][1] - A[v][1]);
+                    E.push_back({ u, v, w });                                        // 🗺 edge u, v with weight w 💰
+                }
             }
+            sort(E.begin(), E.end(), [](auto& a, auto& b) { return a[2] < b[2]; });  // ⭐️ sort edges by weight w 💰
+            fun find = [&](auto x) { return P[x] = x == P[x] ? x : find(P[x]); };
+            auto _union = [&](auto a, auto b) {
+                a = find(a);
+                b = find(b);
+                if (a == b)
+                    return false;
+                P[a] = b;                                                            // 🎲 arbitrary choice
+                return true;
+            };
+            return accumulate(E.begin(), E.end(), 0, [&](auto total, auto& edge) {
+                auto [ u, v, w ] = tie(edge[0], edge[1], edge[2]);
+                return total + (_union(u, v) ? w : 0);                               // 🎯 sum of minimum edge weights w 💰 to construct Kruskal's MST 🌲
+            });
         }
-        sort(E.begin(), E.end(), [](auto& a, auto& b) { return a[2] < b[2]; });  // ⭐️ sort edges by weight w 💰
-        fun find = [&](auto x) { return P[x] = x == P[x] ? x : find(P[x]); };
-        auto _union = [&](auto a, auto b) {
-            a = find(a);
-            b = find(b);
-            if (a == b)
-                return false;
-            P[a] = b;                                                            // 🎲 arbitrary choice
-            return true;
-        };
-        return accumulate(E.begin(), E.end(), 0, [&](auto total, auto& edge) {
-            auto [ u, v, w ] = tie(edge[0], edge[1], edge[2]);
-            return total + (_union(u, v) ? w : 0);                               // 🎯 sum of minimum edge weights w 💰 to construct Kruskal's MST 🌲
-        });
-    }
-};
+    };
+}
+namespace Prim_Naive {
+    class Solution {
+    public:
+        using VI = vector<int>;
+        using VVI = vector<VI>;
+        using Set = unordered_set<int>;
+        int minCostConnectPoints(VVI& A, Set tree = {}, Set cand = {}, int INF = 1e9 + 7, int cost = 0) {
+            int N = A.size();
+            generate_n(inserter(cand, cand.end()), N, [i = -1]() mutable { return ++i; });  // 📬 available candidate vertices (to be greedily added to MST)
+            tree.insert(0);                                                                 // 🎲 arbitrary choice to start with vertex 0 😵
+            cand.erase(0);
+            while (cand.size()) {                                                           // 📬 while there are candidates vertices available
+                auto minCost{ INF };                                                        // 🔍 find the 💰 minimum cost 📬 candidate vertice v
+                auto minVertex{ -1 };
+                for (auto u: tree) {                                                        // for each u already in the tree 🌲
+                    auto[ x1, y1 ] = tie(A[u][0], A[u][1]);
+                    for (auto v: cand) {                                                    // 📬 👀 see if v is the 💰 minimum cost available candidate vertex
+                        auto[ x2, y2 ] = tie(A[v][0], A[v][1]);
+                        auto cost = abs(x1 - x2) + abs(y1 - y2);
+                        if (minCost > cost) {                                               // 💰 greedily update minimum cost and its vertex v
+                            minCost = cost;
+                            minVertex = v;
+                        }
+                    }
+                }
+                cost += minCost;                                                            // 💰 add minimum cost of vertex v to 🎯 ongoing accumulated minimum cost
+                cand.erase(minVertex), tree.insert(minVertex);                              // remove vertex v from candidates 📬 👉 📭  and add vertex v to tree 🌲
+            }
+            return cost;                                                                    // return 🎯 ongoing accumulated minimum cost
+        }
+    };
+
+}
 
 int main() {
     std::cout << "Hello, World!" << std::endl;
