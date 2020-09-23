@@ -9,6 +9,7 @@
 #include <vector>
 #include <numeric>
 #include <unordered_set>
+#include <queue>
 
 using namespace std;
 
@@ -75,7 +76,56 @@ namespace Prim_Naive {
             return cost;                                                                    // return 🎯 ongoing accumulated minimum cost
         }
     };
-
+}
+namespace Prim_Heap {
+    class Solution {
+    public:
+        using VI = vector<int>;
+        using VVI = vector<VI>;
+        using Set = unordered_set<int>;
+        using Pair = pair<int, int>;
+        using Pairs = vector<Pair>;
+        using Queue = priority_queue<Pair, Pairs, std::greater<Pair>>;
+        int minCostConnectPoints(VVI& A, Set cand = {}, int INF = 1e9 + 7, int total = 0) {
+            int N = A.size();
+            generate_n(inserter(cand, cand.end()), N - 1, [i = 0]() mutable { return ++i; });
+            VVI E(N, VI(N));
+            for (auto u{ 0 }; u < N; ++u) {
+                auto [x1, y1] = tie(A[u][0], A[u][1]);
+                for (auto v{ u + 1 }; v < N; ++v) {
+                    auto [x2, y2] = tie(A[v][0], A[v][1]);
+                    auto cost = abs(x1 - x2) + abs(y1 - y2);
+                    E[u][v] = cost;
+                    E[v][u] = cost;
+                }
+            }
+            auto s = 0;
+            Queue q;
+            VI best(N, INF);
+            for (auto v{ 1 }; v < N; ++v) {
+                if (best[v] > E[s][v]) {
+                    best[v] = E[s][v];
+                    q.push({ best[v], v });
+                }
+            }
+            while (cand.size()) {
+                auto [cost, u] = q.top(); q.pop();
+                if (cand.find(u) == cand.end())
+                    continue;
+                cand.erase(u);
+                total += cost;
+                for (auto v{ 0 }; v < N; ++v) {
+                    if (cand.find(v) == cand.end())
+                        continue;
+                    if (best[v] > E[u][v]) {
+                        best[v] = E[u][v];
+                        q.push({ best[v], v });
+                    }
+                }
+            }
+            return total;
+        }
+    };
 }
 
 int main() {
