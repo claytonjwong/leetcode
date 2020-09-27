@@ -6,6 +6,8 @@
  */
 
 #include <iostream>
+#include <sstream>
+#include <queue>
 
 using namespace std;
 
@@ -23,6 +25,30 @@ public:
         return { ans.rbegin(), ans.rend() };
     }
 };
+
+namespace Queue {
+    class Solution {
+    public:
+        using Deque = deque<char>;
+        using Words = deque<string>;
+        string licenseKeyFormatting(string S, int K, string A = {}, Words words = {}, ostringstream out = ostringstream()) {
+            copy_if(S.begin(), S.end(), back_inserter(A), [](auto c) { return c != '-'; });
+            transform(A.begin(), A.end(), A.begin(), ::toupper);
+            while (A.size()) {
+                auto take = min(int(A.size()), K);
+                Deque word;
+                while (take--)
+                    word.push_front(A.back()), A.pop_back();
+                words.push_front({ word.begin(), word.end() });
+            }
+            copy(words.begin(), words.end(), ostream_iterator<string>(out, "-"));
+            auto ans = out.str();
+            if (ans.size())
+                ans.pop_back(); // pop trailing '-'
+            return ans;
+        }
+    };
+}
 
 int main() {
     std::cout << "Hello, World!" << std::endl;
