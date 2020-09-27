@@ -31,14 +31,14 @@ namespace Queue {
     public:
         using Deque = deque<char>;
         using Words = deque<string>;
-        string licenseKeyFormatting(string S, int K, string A = {}, Words words = {}, ostringstream out = ostringstream()) {
-            copy_if(S.begin(), S.end(), back_inserter(A), [](auto c) { return c != '-'; });
-            transform(A.begin(), A.end(), A.begin(), ::toupper);
-            while (A.size()) {
-                auto take = min(int(A.size()), K);
+        string licenseKeyFormatting(string S, int K, Words words = {}, ostringstream out = ostringstream()) {
+            S.erase(remove_if(S.begin(), S.end(), [](auto c) { return c == '-'; }), S.end());
+            transform(S.begin(), S.end(), S.begin(), ::toupper);
+            while (S.size()) {
+                auto take = min(int(S.size()), K);
                 Deque word;
                 while (take--)
-                    word.push_front(A.back()), A.pop_back();
+                    word.push_front(S.back()), S.pop_back();
                 words.push_front({ word.begin(), word.end() });
             }
             copy(words.begin(), words.end(), ostream_iterator<string>(out, "-"));
