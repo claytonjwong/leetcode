@@ -14,32 +14,30 @@ using namespace std;
 class Solution {
 public:
     using VI = vector<int>;
-    using VVI = vector<VI>;
-    int deleteTreeNodes(int N, VI& parent, VI& value) {
-        VVI children(N);
-        for (auto i = 1; i < N; ++i) { // i-th child, j-th parent
-            auto j = parent[i];
-            children[j].push_back(i);
-        }
-        dfs(0, children, value);
-        return bfs(0, children, value);
-    }
-private:
-    int dfs(int node, VVI& children, VI& value, int sum = 0) {
-        for (auto child: children[node])
-            sum += dfs(child, children, value);
-        return value[node] += sum;
-    }
-    int bfs(int node, VVI& children, VI& value, int cnt = 1) { // count starts at 1 to include the root
-        for (queue<int> q{{children[node].begin(), children[node].end()}}; !q.empty(); q.pop()) {
-            auto cur = q.front();
-            if (value[cur] != 0) {
-                ++cnt;
-                for (auto child: children[cur])
-                    q.push(child);
+    using Queue = queue<int>;
+    int deleteTreeNodes(int N, VI& P, VI& total, int pruned = 0) {
+        VI degree(N, 0);
+        for (auto parent: P)
+            if (parent != -1)
+                ++degree[parent];
+        Queue q;
+        for (auto i{ 0 }; i < N; ++i)
+            if (!degree[i])
+                q.push(i);
+        VI nodes(N, 1);
+        while (q.size()) {
+            auto child = q.front(); q.pop();
+            auto parent = P[child];
+            if (!total[child]) {
+                pruned += nodes[child];
+            } else if (parent != -1) {
+                nodes[parent] += nodes[child];
+                total[parent] += total[child];
             }
+            if (parent != -1 && !--degree[parent])
+                q.push(parent);
         }
-        return cnt;
+        return N - pruned;
     }
 };
 
