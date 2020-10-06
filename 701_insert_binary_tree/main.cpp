@@ -15,27 +15,46 @@ struct TreeNode {
     TreeNode(int val) : val{ val }, left{ nullptr }, right{ nullptr } {}
 };
 
-class Solution {
-public:
-    using fun = function<TreeNode*(TreeNode*, int)>;
-    TreeNode* insertIntoBST(TreeNode* root, int x) {
-        fun go = [&](auto root, auto x) {
-            if (x < root->val) {
-                if (root->left)
-                    go(root->left, x);
+namespace Concise {
+    class Solution {
+    public:
+        using fun = function<TreeNode*(TreeNode*, int)>;
+        TreeNode* insertIntoBST(TreeNode* root, int x) {
+            fun go = [&](auto root, auto x) {
+                if (x < root->val)
+                    root->left =  root->left ?  go(root->left, x)  : new TreeNode(x);
                 else
-                    root->left = new TreeNode(x);
-            } else {
-                if (root->right)
-                    go(root->right, x);
-                else
-                    root->right = new TreeNode(x);
-            }
-            return root;
-        };
-        return root ? go(root, x) : new TreeNode(x);
-    }
-};
+                    root->right = root->right ? go(root->right, x) : new TreeNode(x);
+                return root;
+            };
+            return root ? go(root, x) : new TreeNode(x);
+        }
+    };
+}
+
+namespace Verbose {
+    class Solution {
+    public:
+        using fun = function<TreeNode*(TreeNode*, int)>;
+        TreeNode* insertIntoBST(TreeNode* root, int x) {
+            fun go = [&](auto root, auto x) {
+                if (x < root->val) {
+                    if (root->left)
+                        go(root->left, x);
+                    else
+                        root->left = new TreeNode(x);
+                } else {
+                    if (root->right)
+                        go(root->right, x);
+                    else
+                        root->right = new TreeNode(x);
+                }
+                return root;
+            };
+            return root ? go(root, x) : new TreeNode(x);
+        }
+    };
+}
 
 int main() {
     std::cout << "Hello, World!" << std::endl;
