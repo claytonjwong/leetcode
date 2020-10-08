@@ -2,7 +2,7 @@
  * 170. Two Sum III - Data structure design
  *
  * Q: https://leetcode.com/problems/two-sum-iii-data-structure-design/
- * A: https://leetcode.com/problems/two-sum-iii-data-structure-design/discuss/594312/Javascript-and-C%2B%2B-solutions
+ * A: https://leetcode.com/problems/two-sum-iii-data-structure-design/discuss/594312/Javascript-Python3-C%2B%2B-Map-Count-of-X
  */
 
 #include <iostream>
@@ -11,21 +11,20 @@
 using namespace std;
 
 class TwoSum {
+    using Map = unordered_map<int, int>;
+    Map m;
 public:
     void add(int x) {
         ++m[x];
     }
     bool find(int x) {
-        for (auto [y, _]: m) {
-            auto z = x - y;
-            if (m.find(z) != m.end() && (y != z || m[y] > 1))
+        for (auto [y, cnt]: m) {
+            auto t = x - y;
+            if (m.find(t) != m.end() && (t != y || 1 < cnt))
                 return true;
         }
         return false;
     }
-private:
-    using Map = unordered_map<int, int>;
-    Map m;
 };
 
 int main() {
