@@ -74,6 +74,27 @@ namespace BottomUp {
     };
 }
 
+namespace BottomUpMemoryOptimization {
+    class Solution {
+    public:
+        using VI = vector<int>;
+        using VVI = vector<VI>;
+        int rob(VI& A) {
+            int N = A.size();
+            if (N == 1)                                                    // 💎 corner case
+                return A[0];
+            auto best = [&](auto start) {
+                auto [ a, b, c ] = make_tuple(0, 0, 0);                    // 🤔 memo + 🛑 base cases (ie. a = 0 and b = 0)
+                for (auto i{ N - 1 - (start ? 0 : 1) }; start <= i; --i)
+                    c = max(A[i] + a, b),                                  // ✅ with i-th house xor 🚫 without i-th house
+                    a = b, b = c;                                          // 👉 slide window
+                return c;
+            };
+            return max(best(0), best(1));                                  // ✅ with first house xor 🚫 without first house
+        }
+    };
+}
+
 int main() {
     std::cout << "Hello, World!" << std::endl;
     return 0;
