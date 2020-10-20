@@ -2,12 +2,14 @@
  * 133. Clone Graph
  *
  * Q: https://leetcode.com/problems/clone-graph/
- * A: https://leetcode.com/problems/clone-graph/discuss/613748/Javascript-and-C%2B%2B-solutions
+ * A: https://leetcode.com/problems/clone-graph/discuss/613748/Kt-Js-Py3-Cpp-DFS-%2B-BFS-via-Map
  */
 
 #include <iostream>
 #include <vector>
 #include <unordered_map>
+#include <unordered_set>
+#include <queue>
 
 using namespace std;
 
@@ -17,39 +19,45 @@ struct Node {
     Node (int val) : val{val} {}
 };
 
-namespace Concise {
+namespace DFS {
     class Solution {
     public:
-        using Map = unordered_map<Node*, Node*>;
-        Node* cloneGraph(Node* node, Map&& m = {}) {
-            if (!node)
+        using Map = unordered_map<int, Node*>;
+        Node* cloneGraph(Node* cur, Map&& m = {}) {
+            if (!cur)
                 return nullptr;
-            if (m.find(node) != m.end())
-                return m[node];
-            m[node] = new Node(node->val);
-            for (auto nei: node->neighbors)
-                m[node]->neighbors.push_back(cloneGraph(nei, move(m)));
-            return m[node];
+            if (m[cur->val])
+                return m[cur->val];
+            m[cur->val] = new Node(cur->val);
+            for (auto adj: cur->neighbors)
+                m[cur->val]->neighbors.push_back(cloneGraph(adj, move(m)));
+            return m[cur->val];
         }
     };
 }
 
-namespace Verbose {
+namespace BFS {
     class Solution {
     public:
-        Node* cloneGraph(Node* node) {
-            return node ? go(node) : nullptr;
-        }
-    private:
         using Map = unordered_map<int, Node*>;
-        Node* go(Node* node, Map&& seen = {}) {
-            if (seen.find(node->val) != seen.end())
-                return seen[node->val];
-            auto copy = new Node(node->val);
-            seen[node->val] = copy;
-            for (auto nei: node->neighbors)
-                copy->neighbors.push_back(go(nei, move(seen)));
-            return copy;
+        using Set = unordered_set<int>;
+        using Queue = queue<Node*>;
+        Node* cloneGraph(Node* start, Map m = {}) {
+            if (!start)
+                return nullptr;
+            Queue q{{{ start }}};
+            Set seen{ start->val };
+            while (q.size()) {
+                auto cur = q.front(); q.pop();
+                m[cur->val] = m[cur->val] ? m[cur->val] : new Node(cur->val);
+                for (auto adj: cur->neighbors) {
+                    m[adj->val] = m[adj->val] ? m[adj->val] : new Node(adj->val);
+                    m[cur->val]->neighbors.push_back(m[adj->val]);
+                    if (seen.insert(adj->val).second)
+                        q.push(adj);
+                }
+            }
+            return m[start->val];
         }
     };
 }
