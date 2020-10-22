@@ -1,4 +1,4 @@
-cmake_minimum_required(VERSION 3.15)
+cmake_minimum_required(VERSION 3.16)
 project(111_min_depth_binary_tree)
 
 set(CMAKE_CXX_STANDARD 17)
