@@ -6,10 +6,38 @@
  */
 
 #include <iostream>
+#include <sstream>
 #include <vector>
+#include <unordered_map>
 
 using namespace std;
 
+namespace TopDownMemo {
+    class Solution {
+    public:
+        using Map = unordered_map<string, double>;
+        using fun = function<double(int, int)>;
+        double champagneTower(int K, int M, int N, Map m = {}) {
+            fun go = [&](int i, int j) {
+                stringstream key; key << i << "," << j;
+                if (m.find(key.str()) != m.end())
+                    return m[key.str()];                               // 🤔 memo
+                else if (!i && !j)
+                    return m[key.str()] = static_cast<double>(K);      // 🛑 base case: glass at row 0 column 0 has K poured through it
+                if (!i || j < 0)
+                    return m[key.str()] = 0.0;                         // 🚫 non-existent parent glass has 0.0 poured through it
+                auto L = go(i - 1, j - 1),
+                     R = go(i - 1, j);
+                // ⭐️ each parent glass above-and-to-the-(L)eft/(R)ight either overflow when the amount poured exceeds 1.0 xor do *not* overflow when the amount poured does *not* exceed 1.0
+                // 💎 -1.0 since parent glass above consumes at-most 1.0 of the pour and div 2 when overflow occurs, because half overflows on each side of the parent glass
+                return m[key.str()] = (1.0 <= L ? (L - 1.0) / 2 : 0)
+                                    + (1.0 <= R ? (R - 1.0) / 2 : 0);
+            };
+            go(M, max(M, N));                                          // 🌟 since the glasses above-and-to-the-right potentially contribute to the amount poured to M, N we choose N to be the maximum of M, N
+            return min(go(M, N), 1.0);
+        }
+    };
+}
 namespace BottomUp {
     class Solution {
     public:
