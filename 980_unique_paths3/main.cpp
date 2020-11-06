@@ -2,7 +2,7 @@
  * 980. Unique Paths III
  *
  * Q: https://leetcode.com/problems/unique-paths-iii/
- * A: https://leetcode.com/problems/unique-paths-iii/discuss/856143/javascript-python3-c-dfs-bt
+ * A: https://leetcode.com/problems/unique-paths-iii/discuss/856143/Kt-Js-Py3-Cpp-DFS-%2B-BT
  */
 
 #include <iostream>
