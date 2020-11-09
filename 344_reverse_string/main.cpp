@@ -2,7 +2,7 @@
  * 344. Reverse String
  *
  * Q: https://leetcode.com/problems/reverse-string/
- * A: https://leetcode.com/problems/reverse-string/discuss/670042/Javascript-and-C%2B%2B-solutions
+ * A: https://leetcode.com/problems/reverse-string/discuss/670042/Kt-Js-Py3-Cpp-Easy-or-Hard
  */
 
 #include <iostream>
