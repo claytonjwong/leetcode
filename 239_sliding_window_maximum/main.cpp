@@ -11,41 +11,22 @@
 
 using namespace std;
 
-namespace Verbose {
-    class Solution {
-    public:
-        using VI = vector<int>;
-        using Map = map<int, int>;
-        VI maxSlidingWindow(VI& A, int k, Map m = {}, VI best = {}) {
-            for (auto it = A.begin(); it != A.begin() + k; ++m[*it++]);
-            best.push_back(prev(m.end())->first);
-            for (auto i{ k }; i < A.size(); ++i) {
-                if (!--m[A[i - k]])
-                    m.erase(A[i - k]);
-                ++m[A[i]];
-                best.push_back(prev(m.end())->first);
-            }
-            return best;
+class Solution {
+public:
+    using VI = vector<int>;
+    using Map = map<int, int>;
+    VI maxSlidingWindow(VI& A, int k, Map m = {}, VI best = {}) {
+        for (auto i{ 0 }; i < A.size(); ++i) {
+            ++m[A[i]];
+            if (i < k - 1)                         // ✅ first fill window with k elements, for i in 0..k-1 inclusive (ie. k total)
+                continue;
+            best.push_back(prev(m.end())->first);  // 🎯 the maximumal value is the last value of the 🗺 ordered map
+            if (!--m[A[i - (k - 1)]])
+                m.erase(A[i - (k - 1)]);           // 🚫 delete last element which "fell" off the left-hand-side of the window of size k if it's frequency within the updated window is 0
         }
-    };
-}
-namespace Concise {
-    class Solution {
-    public:
-        using VI = vector<int>;
-        using Map = map<int, int>;
-        VI maxSlidingWindow(VI& A, int k, Map m = {}, VI best = {}) {
-            for (auto it = A.begin(); it != A.begin() + k - 1; ++m[*it++]);
-            for (auto i{ k - 1 }; i < A.size(); ++i) {
-                ++m[A[i]];
-                best.push_back(prev(m.end())->first);
-                if (!--m[A[i - (k - 1)]])
-                    m.erase(A[i - (k - 1)]);
-            }
-            return best;
-        }
-    };
-}
+        return best;
+    }
+};
 
 int main() {
     std::cout << "Hello, World!" << std::endl;
