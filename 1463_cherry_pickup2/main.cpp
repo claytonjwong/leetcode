@@ -2,7 +2,7 @@
  * 1463. Cherry Pickup II
  *
  * Q: https://leetcode.com/problems/cherry-pickup-ii/
- * A: https://leetcode.com/problems/cherry-pickup-ii/discuss/660828/Javascript-and-C%2B%2B-solutions
+ * A: https://leetcode.com/problems/cherry-pickup-ii/discuss/660828/Kt-Js-Py3-Cpp-The-ART-of-Dynamic-Programming
  */
 
 #include <iostream>
@@ -17,63 +17,94 @@ namespace TopDown {
     public:
         using VI = vector<int>;
         using VVI = vector<VI>;
+        using fun = function<int(int, int, int)>;
         int cherryPickup(VVI& A) {
             int M = A.size(),
                 N = A[0].size();
-            return go(A, 0, 0, N - 1);
-        }
-    private:
-        int go(VVI& A, int i, int L, int R, int max = 0) {
-            if (i == A.size())
-                return 0;
-            for (auto p{ -1 }; p <= 1; ++p) { // L column offset: left, same, right
-                auto left = L + (0 < i ? p : 0);
-                if (!(0 <= left && left < A[0].size()))
-                    continue;
-                for (auto q{ -1 }; q <= 1; ++q) { // R column offset: left, same, right
-                    auto right = R + (0 < i ? q : 0);
-                    if (!(0 <= right && right < A[0].size()) || right <= left) // pruning condition: right <= left is always a sub-optimal solution
-                        continue;
-                    auto cand = A[i][left] + (left != right ? A[i][right] : 0); // maximum candidate
-                    max = std::max(max, cand + go(A, i + 1, left, right));
-                }
-            }
-            return max;
+            fun go = [&](auto k, auto i, auto j) {
+                auto best = 0;
+                if (k == M)
+                    return 0;
+                for (auto u: VI{ i - 1, i, i + 1 })
+                    for (auto v: VI{ j - 1, j, j + 1})
+                        if (!(u < 0 || v < 0 || u == M || v == N || v <= u))
+                            best = max(best, go(k + 1, u, v));
+                return A[k][i] + A[k][j] + best;
+            };
+            return go(0, 0, N - 1);
         }
     };
 }
-
 namespace TopDownMemo {
     class Solution {
     public:
         using VI = vector<int>;
         using VVI = vector<VI>;
+        using fun = function<int(int, int, int)>;
+        using Map = unordered_map<string, int>;
+        int cherryPickup(VVI& A, Map m = {}) {
+            int M = A.size(),
+                N = A[0].size();
+            fun go = [&](auto k, auto i, auto j) {
+                stringstream key; key << k << "," << i << "," << j;
+                if (m.find(key.str()) != m.end())
+                    return m[key.str()];
+                auto best = 0;
+                if (k == M)
+                    return 0;
+                for (auto u: VI{ i - 1, i, i + 1 })
+                    for (auto v: VI{ j - 1, j, j + 1})
+                        if (!(u < 0 || v < 0 || u == M || v == N || v <= u))
+                            best = max(best, go(k + 1, u, v));
+                return m[key.str()] = A[k][i] + A[k][j] + best;
+            };
+            return go(0, 0, N - 1);
+        }
+    };
+}
+namespace BottomUp {
+    class Solution {
+    public:
+        using VI = vector<int>;
+        using VVI = vector<VI>;
+        using VVVI = vector<VVI>;
         int cherryPickup(VVI& A) {
             int M = A.size(),
                 N = A[0].size();
-            return go(A, 0, 0, N - 1);
+            VVVI dp(M + 1, VVI(N, VI(N)));
+            for (auto k{ M - 1 }; 0 <= k; --k)
+                for (auto i{ 0 }; i < N; ++i)
+                    for (auto j{ 0 }; j < N; ++j)
+                        for (auto u: VI{ i - 1, i, i + 1 })
+                            for (auto v: VI{ j - 1, j, j + 1 })
+                                if (!(u < 0 || v < 0 || u == M || v == N || v <= u))
+                                    dp[k][i][j] = max(dp[k][i][j], A[k][i] + A[k][j] + dp[k + 1][u][v]);
+            return dp[0][0][N - 1];
         }
-    private:
-        using Memo = unordered_map<string, int>;
-        int go(VVI& A, int i, int L, int R, Memo&& m = {}) {
-            stringstream key; key << i << "," << L << "," << R;
-            if (m.find(key.str()) != m.end())
-                return m[key.str()];
-            if (i == A.size())
-                return m[key.str()] = 0;
-            for (auto p{ -1 }; p <= 1; ++p) { // L column offset: left, same, right
-                auto left = L + (0 < i ? p : 0);
-                if (!(0 <= left && left < A[0].size()))
-                    continue;
-                for (auto q{ -1 }; q <= 1; ++q) { // R column offset: left, same, right
-                    auto right = R + (0 < i ? q : 0);
-                    if (!(0 <= right && right < A[0].size()) || right <= left) // pruning condition: right <= left is always a sub-optimal solution
-                        continue;
-                    auto cand = A[i][left] + (left != right ? A[i][right] : 0); // maximum candidate
-                    m[key.str()] = std::max(m[key.str()], cand + go(A, i + 1, left, right, move(m)));
-                }
+    };
+}
+namespace BottomUpMemOpt {
+    class Solution {
+    public:
+        using VI = vector<int>;
+        using VVI = vector<VI>;
+        using VVVI = vector<VVI>;
+        int cherryPickup(VVI& A) {
+            int M = A.size(),
+                N = A[0].size();
+            VVVI dp(M + 1, VVI(N, VI(N)));
+            VVI pre(N, VI(N));
+            for (auto k{ M - 1 }; 0 <= k; --k) {
+                VVI cur(N, VI(N));
+                for (auto i{ 0 }; i < N; ++i)
+                    for (auto j{ 0 }; j < N; ++j)
+                        for (auto u: VI{ i - 1, i, i + 1 })
+                            for (auto v: VI{ j - 1, j, j + 1 })
+                                if (!(u < 0 || v < 0 || u == M || v == N || v <= u))
+                                    cur[i][j] = max(cur[i][j], A[k][i] + A[k][j] + pre[u][v]);
+                swap(pre, cur);
             }
-            return m[key.str()];
+            return pre[0][N - 1];
         }
     };
 }
