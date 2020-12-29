@@ -22,12 +22,13 @@ public:
     using fun = function<void(TreeNode*)>;
     int pseudoPalindromicPaths (TreeNode* root, Map m = {}, int odd = 0, int paths = 0) {
         fun go = [&](auto root) {
-            odd += ++m[root->val] & 1 ? 1 : -1;
+            auto x = root->val;
+            odd += ++m[x] & 1 ? 1 : -1;
             if (!root->left && !root->right)
                 paths += odd <= 1;
             if (root->left)  go(root->left);
             if (root->right) go(root->right);
-            odd += --m[root->val] & 1 ? 1 : -1;
+            odd += --m[x] & 1 ? 1 : -1;
         };
         go(root);
         return paths;
