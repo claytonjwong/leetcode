@@ -8,36 +8,61 @@
 #include <iostream>
 #include <vector>
 #include <queue>
+#include <unordered_map>
 
 using namespace std;
 
-class Solution {
-public:
-    using VI = vector<int>;
-    using VVI = vector<VI>;
-    using Queue = queue<int>;
-    bool canFormArray(VI& need, VVI& have, Queue q = {}) {
-        for (auto x: need) {
-            if (q.size()) {
-                if (x != q.front())
-                    return false;
-                q.pop();
-                continue;
-            }
-            auto found{ false };
-            for (auto& piece: have) {
-                if (x == piece[0]) {
-                    found = true;
-                    for (auto i{ 1 }; i < piece.size(); q.push(piece[i++]));
-                    break;
+namespace Queue {
+    class Solution {
+    public:
+        using VI = vector<int>;
+        using VVI = vector<VI>;
+        using Queue = queue<int>;
+        bool canFormArray(VI& need, VVI& have, Queue q = {}) {
+            for (auto x: need) {
+                if (q.size()) {
+                    if (x != q.front())
+                        return false;
+                    q.pop();
+                    continue;
                 }
+                auto found{ false };
+                for (auto& piece: have) {
+                    if (x == piece[0]) {
+                        found = true;
+                        for (auto i{ 1 }; i < piece.size(); q.push(piece[i++]));
+                        break;
+                    }
+                }
+                if (!found)
+                    return false;
             }
-            if (!found)
-                return false;
+            return true;
         }
-        return true;
-    }
-};
+    };
+}
+namespace Map {
+    class Solution {
+    public:
+        using VI = vector<int>;
+        using VVI = vector<VI>;
+        using Map = unordered_map<int, int>;
+        bool canFormArray(VI& need, VVI& have, Map m = {}, VI make = {}) {
+            for (auto i{ 0 }; i < have.size(); ++i)
+                m[have[i][0]] = i;
+            int i = 0,
+                N = need.size();
+            while (i < N) {
+                if (m.find(need[i]) == m.end())
+                    return false;
+                auto j = m[need[i]];
+                make.insert(make.end(), have[j].begin(), have[j].end());
+                i += have[j].size();
+            }
+            return need == make;
+        }
+    };
+}
 
 int main() {
     std::cout << "Hello, World!" << std::endl;
