@@ -2,7 +2,7 @@
  * 1379. Find a Corresponding Node of a Binary Tree in a Clone of That Tree
  *
  * Q: https://leetcode.com/problems/find-a-corresponding-node-of-a-binary-tree-in-a-clone-of-that-tree/
- * A: https://leetcode.com/problems/find-a-corresponding-node-of-a-binary-tree-in-a-clone-of-that-tree/discuss/537655/Javascript-and-C%2B%2B-solutions
+ * A: https://leetcode.com/problems/find-a-corresponding-node-of-a-binary-tree-in-a-clone-of-that-tree/discuss/537655/Kt-Js-Py3-Cpp-Traverse-A%2BB-Simultaneously
  */
 
 #include <iostream>
@@ -17,19 +17,16 @@ struct TreeNode {
 
 class Solution {
 public:
-    using TN = TreeNode*;
-    TN getTargetCopy(TN a, TN b, TN c, TN ans = nullptr) {
-        go(a, b, c, ans);
-        return ans;
-    }
-private:
-    void go(TN a, TN b, TN c, TN& ans) {
-        if (a == c)
-            ans = b;
-        if (a->left)
-            go(a->left, b->left, c, ans);
-        if (a->right)
-            go(a->right, b->right, c, ans);
+    using fun = function<TreeNode*(TreeNode*, TreeNode*)>;
+    TreeNode* getTargetCopy(TreeNode* A, TreeNode* B, TreeNode* T) {
+        fun go = [&](auto a, auto b) {
+            if (a == T)
+                return b;
+            auto L = a->left  ? go(a->left,  b->left)  : nullptr,
+                 R = a->right ? go(a->right, b->right) : nullptr;
+            return L ? L : R;
+        };
+        return go(A, B);
     }
 };
 
