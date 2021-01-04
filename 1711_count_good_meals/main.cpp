@@ -14,15 +14,13 @@ using namespace std;
 class Solution {
 public:
     using VI = vector<int>;
-    using LL = long long;
-    using VLL = vector<LL>;
-    using Map = unordered_map<LL, LL>;
-    int countPairs(VI& A, Map m = {}, LL mod = 1e9 + 7, LL cnt = 0) {
-        for (LL x: A) {
-            for (LL t{ 1 }; t <= 100 * 1e9; t <<= 1) {
-                LL y = t - x;
+    using Map = unordered_map<int, int>;
+    int countPairs(VI& A, Map m = {}, int cnt = 0) {
+        for (auto x: A) {
+            for (auto t{ 1 }; t <= (1 << 21); t <<= 1) {
+                auto y = t - x;
                 if (0 <= y && m.find(y) != m.end())
-                    cnt = (cnt + m[y]) % mod;
+                    cnt = (cnt + m[y]) % int(1e9 + 7);
             }
             ++m[x];
         }
