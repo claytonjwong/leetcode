@@ -2,7 +2,7 @@
  * 3. Longest Substring Without Repeating Characters
  *
  * Q: https://leetcode.com/problems/longest-substring-without-repeating-characters/
- * A: https://leetcode.com/problems/longest-substring-without-repeating-characters/discuss/504179/Javascript-Python3-C%2B%2B-Previously-Seen-Duplicate
+ * A: https://leetcode.com/problems/longest-substring-without-repeating-characters/discuss/504179/Kt-Js-Py3-Cpp-Best-i-Last-Seen-Duplicate-Index
  */
 
 #include <iostream>
@@ -12,14 +12,13 @@ using namespace std;
 
 class Solution {
 public:
-    using Map = unordered_map<int, int>;
-    int lengthOfLongestSubstring(string S, Map m = {}, int pre = -1, int max = 0) {
-        for (auto i{ 0 }; i < S.size(); ++i) {
-            auto c = S[i];
-            pre = std::max(pre, m.find(c) != m.end() ? m[c] : -1), m[c] = i;  // 👀 track index of previously seen duplicate
-            max = std::max(max, i - pre);                                     // 🎯 maximum substring length without duplicate
+    using Map = unordered_map<char, int>;
+    int lengthOfLongestSubstring(string s, Map m = {}, int last = -1, int best = 0) {
+        for (auto i{ 0 }; i < s.size(); ++i) {
+            last = max(last, m.find(s[i]) != m.end() ? m[s[i]] : -1), m[s[i]] = i;
+            best = max(best, i - last);
         }
-        return max;
+        return best;
     }
 };
 
