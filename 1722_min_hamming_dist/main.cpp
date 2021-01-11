@@ -2,7 +2,7 @@
  * 1722. Minimize Hamming Distance After Swap Operations
  *
  * Q: https://leetcode.com/problems/minimize-hamming-distance-after-swap-operations/
- * A: https://leetcode.com/problems/minimize-hamming-distance-after-swap-operations/discuss/1009782/C%2B%2B-Union-Find-Indices-%2B-Multiset-Difference
+ * A: https://leetcode.com/problems/minimize-hamming-distance-after-swap-operations/discuss/1009782/Kt-Js-Py3-Cpp-Union-Find-%2B-Set-Diff
  */
 
 #include <iostream>
