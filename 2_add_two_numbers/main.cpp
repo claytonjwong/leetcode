@@ -2,7 +2,7 @@
  * 2. Add Two Numbers
  *
  * Q: https://leetcode.com/problems/add-two-numbers/
- * A: https://leetcode.com/problems/add-two-numbers/discuss/1093/a-few-solutions...
+ * A: https://leetcode.com/problems/add-two-numbers/discuss/1093/Kt-Js-Py3-Cpp-Concise-solutions
  */
 
 #include <iostream>
@@ -15,19 +15,19 @@ struct ListNode {
 
 class Solution {
 public:
-    ListNode* addTwoNumbers( ListNode* a, ListNode* b, int carry = 0) {
-        auto ans = new ListNode{-1}, head = ans;
-        for (;;) {
-            head->val = (a ? a->val : 0) + (b ? b->val : 0) + carry;
-            carry = head->val / 10;
-            head->val %= 10;
-            if (a) a = a->next;
-            if (b) b = b->next;
-            if (!a && !b && !carry)
-                break;
-            head = head->next = new ListNode{-1};
+    ListNode* addTwoNumbers(ListNode* A, ListNode* B, bool carry = false) {
+        auto ans = new ListNode(-1),
+             cur = ans;
+        while (A || B || carry) {
+            auto a = A ? A->val : 0,
+                 b = B ? B->val : 0,
+                 c = a + b + int(carry);
+            carry = 10 <= c, c %= 10;
+            cur->next = new ListNode(c), cur = cur->next;
+            A = A ? A->next : nullptr;
+            B = B ? B->next : nullptr;
         }
-        return ans;
+        return ans->next;
     }
 };
 
