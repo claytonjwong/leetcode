@@ -2,7 +2,7 @@
  * 1506. Find Root of N-Ary Tree
  *
  * Q: https://leetcode.com/problems/find-root-of-n-ary-tree/
- * A: https://leetcode.com/problems/find-root-of-n-ary-tree/discuss/729168/Javascript-and-C%2B%2B-solutions
+ * A: https://leetcode.com/problems/find-root-of-n-ary-tree/discuss/729168/Kt-Js-Py3-Cpp-O(N)-%2B-O(1)-memory-solutions
  */
 
 #include <iostream>
@@ -21,28 +21,27 @@ namespace Naive {
     public:
         using Nodes = vector<Node*>;
         using Set = unordered_set<Node*>;
-        Node* findRoot(Nodes tree, Set children = {}) {
-            for (auto node: tree)
-                for (auto child: node->children)
+        Node* findRoot(Nodes A, Set children = {}) {
+            for (auto it: A)
+                for (auto child: it->children)
                     children.insert(child);
-            tree.erase(remove_if(tree.begin(), tree.end(), [&](auto node) { return children.find(node) != children.end(); }), tree.end());
-            return tree[0]; // 🎯 root node is the only node which is *not* a child
+            A.erase(remove_if(A.begin(), A.end(), [&](auto it) { return children.find(it) != children.end(); }), A.end());
+            return A.front();
         }
     };
 }
-
 namespace MemOpt {
     class Solution {
     public:
         using Nodes = vector<Node*>;
-        Node* findRoot(Nodes tree, int x = 0) {
-            for (auto node: tree) {
-                x ^= node->val; // 🎯 root node is only xor'ed once here, 🚫 child nodes are xor'ed once here and once below
-                for (auto child: node->children)
-                    x ^= child->val; // 🚫 child nodes are xor'ed a second time here
+        Node* findRoot(Nodes A, int x = 0) {
+            for (auto it: A) {
+                x ^= it->val;
+                for (auto child: it->children)
+                    x ^= child->val;
             }
-            tree.erase(remove_if(tree.begin(), tree.end(), [&](auto node) { return node->val != x; }), tree.end());
-            return tree[0];
+            A.erase(remove_if(A.begin(), A.end(), [=](auto it) { return x != it->val; }), A.end());
+            return A.front();
         }
     };
 }
