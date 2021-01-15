@@ -10,22 +10,42 @@
 
 using namespace std;
 
-class Solution {
-public:
-    using VI = vector<int>;
-    int numRescueBoats(VI& A, int K, int cnt = 0) {
-        sort(A.begin(), A.end());
-        int N = A.size(),
-            i = 0,
-            j = N - 1;
-        while (i <= j)
-            if (A[i] + A[j] <= K)            // ⛵️ case 1: both 🙂 i-th and 🙂 j-th person
-                ++cnt, ++i, --j;
-            else                             // ⛵️ case 2: only 😕 j-th person
-                ++cnt, --j;
-        return cnt;                          // 🎯 minimum boat count via 💰 greedy consumption
-    }
-};
+namespace concise {
+    class Solution {
+    public:
+        using VI = vector<int>;
+        int numRescueBoats(VI& A, int K, int cnt = 0) {
+            sort(A.begin(), A.end());
+            int N = A.size(),
+                i = 0,
+                j = N - 1;
+            while (i <= j) {
+                if (A[i] + A[j] <= K)
+                    ++i;               // 🙂 i-th person sometimes fits in the boat ⛵️
+                ++cnt, --j;            // 🙂 j-th person always    fits in the boat ⛵️
+            }
+            return cnt;                // 🎯 minimum boat count via 💰 greedy consumption
+        }
+    };
+}
+namespace verbose {
+    class Solution {
+    public:
+        using VI = vector<int>;
+        int numRescueBoats(VI& A, int K, int cnt = 0) {
+            sort(A.begin(), A.end());
+            int N = A.size(),
+                i = 0,
+                j = N - 1;
+            while (i <= j)
+                if (A[i] + A[j] <= K)            // ⛵️ case 1: both 🙂 i-th and 🙂 j-th person
+                    ++cnt, ++i, --j;
+                else                             // ⛵️ case 2: only 😕 j-th person
+                    ++cnt, --j;
+            return cnt;                          // 🎯 minimum boat count via 💰 greedy consumption
+        }
+    };
+}
 
 int main() {
     std::cout << "Hello, World!" << std::endl;
