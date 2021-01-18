@@ -15,18 +15,15 @@ class Solution {
 public:
     using VI = vector<int>;
     using Map = unordered_map<int, int>;
-    int maxOperations(VI& A, int k, Map m = {}, int pairs = 0) {
+    int maxOperations(VI& A, int T, Map m = {}, int cnt = 0) {
         for (auto x: A) {
-            auto y = k - x;
-            if (m.find(y) == m.end()) {
+            auto y = T - x;
+            if (m[y])
+                --m[y], ++cnt;
+            else
                 ++m[x];
-                continue;
-            }
-            ++pairs;
-            if (!--m[y])
-                m.erase(y);
         }
-        return pairs;
+        return cnt;
     }
 };
 
